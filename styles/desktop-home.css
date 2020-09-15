@@ -1,0 +1,98 @@
+html, body{
+    margin: 0;
+    width: 100%;
+    height: 100%;
+}
+.primary-bg-color{
+    background-color: whitesmoke;
+}
+.secondary-bg-color{
+    background-color: rgb(23, 23, 23);
+}
+.page-bg{
+    background-color: rgb(61, 61, 61);
+}
+.page-container{
+    margin: 0;
+    width: 100%;
+    height: 100%;
+}
+.page-header{
+    margin: 0;
+    width: 90%;
+    height: 50px;
+    padding: 10px 5% 10px 5%;
+}
+.header-logo{
+    border: 1px solid red;
+    display: inline-block;
+    height: 100%;
+}
+.site-logo{
+    height: 100%;
+}
+.site-name{
+    color: whitesmoke;
+    display: inline-block;
+    margin-left: 30px;
+}
+.navbar-container{
+    background-color: rgb(211, 42, 42);
+    height: 30px;
+    margin: 0;
+}
+.navbar-container ul{
+    list-style: none;
+    margin: 0;
+}
+.navbar-item{
+    display: inline-block;
+    margin-right: 10px;
+}
+.navbar-item a{
+    color: whitesmoke;
+    text-decoration: none;
+}
+.page-content{
+    margin: 0px auto;
+    position: relative;
+    width: 90%;
+    min-height: 100%;
+}
+.featured-content{
+
+}
+.recent-content{
+
+}
+.page-footer{
+    margin: 0;
+    width: 100%;
+    height: 60px;
+    position: relative;
+}
+.footer-navbar-container{
+    margin: 0;
+    height: 40px;
+    padding: 5px;
+}
+.footer-navbar-container ul{
+    list-style: none;
+    margin: 0 0 5px 0;
+    text-align: center;
+}
+.footer-navbar-item{
+    display: inline-block;
+    margin-right: 10px;
+}
+.footer-navbar-item a{
+    color: whitesmoke;
+    text-decoration: none;
+}
+.page-footer-copyright{
+    color: whitesmoke;
+    display: block;
+    margin: 0;
+    text-decoration: none;
+    text-align: center;
+}
