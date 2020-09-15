@@ -12,6 +12,9 @@ html, body{
 .page-bg{
     background-color: rgb(61, 61, 61);
 }
+.site-text{
+    font-family: 'Open Sans', sans-serif;    
+}
 .page-container{
     margin: 0;
     width: 100%;
@@ -24,17 +27,20 @@ html, body{
     padding: 10px 5% 10px 5%;
 }
 .header-logo{
-    border: 1px solid red;
     display: inline-block;
+    width: 200px;
     height: 100%;
 }
 .site-logo{
     height: 100%;
+    margin: 0;
 }
 .site-name{
     color: whitesmoke;
     display: inline-block;
-    margin-left: 30px;
+    font-family: 'Almendra', serif;
+    font-size: 20pt;
+    margin: auto 20px;
 }
 .navbar-container{
     background-color: rgb(211, 42, 42);
