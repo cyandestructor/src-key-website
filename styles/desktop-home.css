@@ -1,5 +1,6 @@
 html, body{
     margin: 0;
+    padding: 0;
     width: 100%;
     height: 100%;
 }
@@ -12,14 +13,6 @@ html, body{
 .page-bg{
     background-color: rgb(61, 61, 61);
 }
-.site-text{
-    font-family: 'Open Sans', sans-serif;    
-}
-.page-container{
-    margin: 0;
-    width: 100%;
-    height: 100%;
-}
 .page-header{
     margin: 0;
     width: 90%;
@@ -28,42 +21,55 @@ html, body{
 }
 .header-logo{
     display: inline-block;
+    border: 1px solid red;
     width: 200px;
     height: 100%;
 }
-.site-logo{
-    height: 100%;
-    margin: 0;
+.header-logo a{
+    text-decoration: none;
 }
-.site-name{
+.header-logo img{
+    height: 100%;
+}
+.header-logo h1{
     color: whitesmoke;
     display: inline-block;
     font-family: 'Almendra', serif;
     font-size: 20pt;
-    margin: auto 20px;
+    margin: 5px 20px;
 }
 .navbar-container{
-    background-color: rgb(211, 42, 42);
+    background-color: tomato;
     height: 30px;
+    padding: 5px;
     margin: 0;
+    font-family: 'Roboto', sans-serif;
+    text-align: center;
 }
 .navbar-container ul{
     list-style: none;
     margin: 0;
 }
-.navbar-item{
+.navbar-container li{
     display: inline-block;
     margin-right: 10px;
 }
-.navbar-item a{
+.navbar-container a{
     color: whitesmoke;
     text-decoration: none;
 }
-.page-content{
-    margin: 0px auto;
+.page-container{
+    margin: 0;
+    width: 100%;
+    height: 100%;
     position: relative;
+}
+.page-content{
+    margin: 0;
     width: 90%;
     min-height: 100%;
+    position: absolute;
+    left: 5%;
 }
 .featured-content{
 
@@ -72,33 +78,28 @@ html, body{
 
 }
 .page-footer{
-    margin: 0;
     width: 100%;
     height: 60px;
-    position: relative;
 }
 .footer-navbar-container{
     margin: 0;
     height: 40px;
     padding: 5px;
+    font-family: 'Roboto', sans-serif;
+    text-align: center;
 }
 .footer-navbar-container ul{
     list-style: none;
     margin: 0 0 5px 0;
-    text-align: center;
 }
-.footer-navbar-item{
+.footer-navbar-container li{
     display: inline-block;
     margin-right: 10px;
 }
-.footer-navbar-item a{
+.footer-navbar-container a{
     color: whitesmoke;
     text-decoration: none;
 }
-.page-footer-copyright{
-    color: whitesmoke;
-    display: block;
-    margin: 0;
-    text-decoration: none;
-    text-align: center;
+.footer-navbar-container a:hover{
+    color: tomato;
 }
