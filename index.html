@@ -5,21 +5,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Almendra:wght@700&family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/styles/desktop-home.css">
+    <link rel="shortcut icon" href="assets/img/src-key-logo-dark.svg" type="image/x-icon">
     <title>src-key: development and programming news</title>
 </head>
 <body>
     <header class="page-header secondary-bg-color">
-        <section class="header-logo">
+        <section class="page-header-item header-logo">
             <a href="/index.html">
-                <img src="" alt="src-key">
+                <img src="/assets/img/src-key-logo-clear.svg" alt="src-key"
+                onmouseover="this.src = '/assets/img/src-key-logo-blink.svg'"
+                onmouseout="this.src = '/assets/img/src-key-logo-clear.svg'">
                 <h1>src-key</h1>
             </a>
         </section>
-        <section class="searchbar-container">
+        <section class="page-header-item searchbar-container">
             <!-- TODO: Serchbar label and design -->
         </section>
-        <section class="session-container">
+        <section class="page-header-item session-container">
             <!-- TODO: Session section. Log in, sign in, log out... -->
+            <p>session</p>
+            <img src="assets/img/user-helmet.svg" alt="Session">
+            <section class="session-submenu">
+                <ul>
+                    <li>
+                        <a href="#">log in</a>
+                    </li>
+                    <li>
+                        <a href="#">sign in</a>
+                    </li>
+                </ul>
+            </section>
         </section>
     </header>
     <nav class="navbar-container">
