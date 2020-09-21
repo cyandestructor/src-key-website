@@ -16,6 +16,7 @@ html, body{
     background-size: 50px;
 }
 .page-header{
+    /* Page header is 70px total height */
     position: relative;
     margin: 0;
     width: 90%;
@@ -47,31 +48,41 @@ html, body{
     margin: 5px 20px;
 }
 .session-container{
+    background-color: tomato;
     position: absolute;
     right: 5%;
-    width: 200px;
-    height: 50px;
+    height: 40px;
+    padding: 5px;
+    border-radius: 5px;
 }
 .session-container p{
     display: inline;
     color: whitesmoke;
     font-family: 'Roboto', sans-serif;
-    margin-right: 5px;
+    margin-right: 10px;
 }
-.session-container img{
-    height: 100%;
+.session-icon{
+    background-color: whitesmoke;
+    border-radius: 50%;
+    display: inline-block;
+    height: 40px;
+}
+.session-icon img{
+    height: 40px;
 }
 .session-submenu{
     display: none;
+    background-color: rgb(61, 61, 61);
     position: absolute;
+    font-family: 'Roboto', sans-serif;
 }
 .session-submenu ul{
-    border: 1px solid red;
     list-style: none;
 }
 .session-submenu li{
 }
-.session-submenu a{
+.session-submenu li a{
+    color: whitesmoke;
     text-decoration: none;
 }
 .session-container:hover .session-submenu{
