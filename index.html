@@ -4,12 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Almendra:wght@700&family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="/styles/desktop-home.css">
     <link rel="shortcut icon" href="assets/img/src-key-logo-dark.svg" type="image/x-icon">
     <title>src key - development and programming news</title>
 </head>
 <body>
-    <header class="page-header secondary-bg-color">
+    <header class="clearfix page-header secondary-bg-color">
         <section class="page-header-item header-logo">
             <a href="/index.html">
                 <img src="/assets/img/src-key-logo-clear.svg" alt="src-key"
@@ -19,14 +20,20 @@
             </a>
         </section>
         <section class="page-header-item searchbar-container">
-            <!-- TODO: Serchbar label and design -->
+            <!-- Searchbar label and design -->
+            <section class="searchbar">
+                <form action="" method="get">
+                    <input type="text" name="searchbar" id="searchbar" placeholder="search for articles" autocomplete="off">
+                    <input type="submit" value="search" class="material-icons">
+                </form>
+            </section>
         </section>
         <section class="page-header-item session-container">
-            <!-- TODO: Session section. Log in, sign in, log out... -->
-            <p>session</p>
+            <!-- Session section. Log in, sign in, log out... -->
             <section class="session-icon">
                 <img src="assets/img/user-helmet.svg" alt="Session">
             </section>
+            <p>session</p>
             <section class="session-submenu">
                 <ul>
                     <li>
@@ -39,18 +46,18 @@
             </section>
         </section>
     </header>
-    <nav class="navbar-container">
+    <nav class="clearfix navbar-container">
         <ul>
-            <li>
+            <li class="navbar-item">
                 <a href="/index.html">home</a>
             </li>
-            <li>
+            <li class="navbar-item">
                 <a href="#">top news</a>
             </li>
-            <li>
+            <li class="navbar-item">
                 <a href="#">recent news</a>
             </li>
-            <li>
+            <li class="navbar-item">
                 <a href="#">about us</a>
             </li>
         </ul>

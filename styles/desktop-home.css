@@ -1,3 +1,6 @@
+*{
+    box-sizing: border-box;
+}
 html, body{
     margin: 0;
     padding: 0;
@@ -15,17 +18,22 @@ html, body{
     background-image: url("/assets/img/src-key-logo-bg.svg");
     background-size: 50px;
 }
+.clearfix::after {
+    content: "";
+    clear: both;
+    display: table;
+}
 .page-header{
-    /* Page header is 70px total height */
     position: relative;
     margin: 0;
-    width: 90%;
-    height: 50px;
+    width: 100%;
+    height: 70px;
+    /* border: 1px solid red; */
     padding: 10px 5% 10px 5%;
 }
 .page-header-item{
     display: inline-block;
-    /*border: 1px solid red;*/
+    /* border: 1px solid red; */
 }
 .header-logo{
     width: 200px;
@@ -42,46 +50,80 @@ html, body{
 }
 .header-logo h1{
     color: whitesmoke;
-    display: inline-block;
+    display: inline;
     font-family: 'Almendra', serif;
-    font-size: 20pt;
-    margin: 5px 20px;
+    font-size: 2em;
+    margin-left: 20px;
+    /* border: 1px solid red; */
+}
+.searchbar input[type="text"]{
+    background-color: rgb(61, 61, 61);
+    border: none;
+    border-radius: 10px;
+    color: whitesmoke;
+    display: inline-block;
+    width: 200px;
+    height: 30px;
+    margin: 0;
+    padding: 5px;
+}
+.searchbar input[type="submit"]{
+    background-color: rgb(61, 61, 61);
+    border: none;
+    border-radius: 50%;
+    color: whitesmoke;
+    cursor: pointer;
+    display: inline-block;
+    font-size: medium;
+    width: 30px;
+    height: 30px;
+    margin: 0;
+    padding: 5px;
 }
 .session-container{
-    background-color: tomato;
+    background-color: rgb(61, 61, 61);
+    border-radius: 10px;
     position: absolute;
     right: 5%;
-    height: 40px;
+    width: 120px;
+    height: 50px;
     padding: 5px;
-    border-radius: 5px;
 }
 .session-container p{
     display: inline;
     color: whitesmoke;
     font-family: 'Roboto', sans-serif;
-    margin-right: 10px;
+    margin-left: 10px;
 }
 .session-icon{
     background-color: whitesmoke;
     border-radius: 50%;
     display: inline-block;
-    height: 40px;
+    height: 100%;
 }
 .session-icon img{
-    height: 40px;
+    height: 100%;
 }
 .session-submenu{
     display: none;
     background-color: rgb(61, 61, 61);
     position: absolute;
+    left: 0;
     font-family: 'Roboto', sans-serif;
+    width: 120px;
 }
 .session-submenu ul{
     list-style: none;
+    margin: 0;
+    padding: 0;
 }
-.session-submenu li{
+.session-submenu ul li{
+    padding: 5px;
 }
-.session-submenu li a{
+.session-submenu ul li:hover{
+    background-color: rgb(83, 83, 83);
+}
+.session-submenu ul li a{
     color: whitesmoke;
     text-decoration: none;
 }
@@ -94,19 +136,28 @@ html, body{
     padding: 5px;
     margin: 0;
     font-family: 'Roboto', sans-serif;
-    text-align: center;
 }
 .navbar-container ul{
     list-style: none;
     margin: 0;
+    padding: 0;
 }
-.navbar-container li{
-    display: inline-block;
-    margin-right: 10px;
+.navbar-item{
+    display: block;
+    width: 10%;
+    float: left;
+    text-align: center;
+    border-right: 2px solid whitesmoke;
 }
-.navbar-container a{
+.navbar-item a{
+    display: block;
+    width: 100%;
     color: whitesmoke;
     text-decoration: none;
+}
+.navbar-item a:hover{
+    color: rgb(61, 61, 61);
+    font-weight: bold;
 }
 .page-container{
     margin: 0;
@@ -140,16 +191,18 @@ html, body{
 }
 .footer-navbar-container ul{
     list-style: none;
-    margin: 0 0 5px 0;
+    margin: 0;
+    padding: 0;
 }
 .footer-navbar-container li{
     display: inline-block;
-    margin-right: 10px;
+    padding: 0 10px;
 }
 .footer-navbar-container a{
-    color: whitesmoke;
+    color: rgb(83, 83, 83);
     text-decoration: none;
 }
 .footer-navbar-container a:hover{
     color: tomato;
+    font-weight: bold;
 }
