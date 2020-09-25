@@ -32,12 +32,13 @@ html, body{
     padding: 10px 5% 10px 5%;
 }
 .page-header-item{
-    display: inline-block;
+    display: block;
+    height: 100%;
     /* border: 1px solid red; */
 }
 .header-logo{
-    width: 200px;
-    height: 100%;
+    float: left;
+    width: 33%;
 }
 .header-logo a{
     text-decoration: none;
@@ -56,13 +57,18 @@ html, body{
     margin-left: 20px;
     /* border: 1px solid red; */
 }
+.searchbar-container{
+    float: left;
+    width: 33%;
+    padding: 5px 20px;
+}
 .searchbar input[type="text"]{
     background-color: rgb(61, 61, 61);
     border: none;
     border-radius: 10px;
     color: whitesmoke;
     display: inline-block;
-    width: 200px;
+    width: 80%;
     height: 30px;
     margin: 0;
     padding: 5px;
@@ -81,15 +87,20 @@ html, body{
     padding: 5px;
 }
 .session-container{
+    float: right;
+    position: relative;
+    width: 33%;
+    height: 100%;
+}
+.session-box{
     background-color: rgb(61, 61, 61);
     border-radius: 10px;
-    position: absolute;
-    right: 5%;
+    float: right;
     width: 120px;
-    height: 50px;
+    height: 100%;
     padding: 5px;
 }
-.session-container p{
+.session-box p{
     display: inline;
     color: whitesmoke;
     font-family: 'Roboto', sans-serif;
@@ -107,10 +118,10 @@ html, body{
 .session-submenu{
     display: none;
     background-color: rgb(61, 61, 61);
-    position: absolute;
-    left: 0;
+    float: right;
     font-family: 'Roboto', sans-serif;
     width: 120px;
+    padding: 5px;
 }
 .session-submenu ul{
     list-style: none;
