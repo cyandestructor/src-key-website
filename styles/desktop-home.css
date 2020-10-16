@@ -4,12 +4,59 @@ rgb(83, 83, 83);
 rgb(23, 23, 23);
 tomato
 */
-body{
-    background-color: rgb(61, 61, 61);
-}
 .bg-dark-main{
     background-color: rgb(23, 23, 23);
 }
-.nav-link{
+.bg-dark-secondary{
+    background-color: rgb(83, 83, 83);
+}
+.bg-dark-page{
+    background-color: rgb(61, 61, 61);
+}
+.navbar-dark .navbar-nav .nav-hover:hover{
     color: tomato;
+}
+.carousel-caption{
+    background-color: rgba(63, 63, 63, 0.75);
+    border-radius: 20px;
+}
+.page-background{
+    background-image: url("/assets/img/src-key-logo-bg.svg");
+    background-size: 50px;
+}
+.page-container{
+    min-width: 100%;
+    min-height: 100%;
+}
+.page-content{
+    max-width: 90%;
+    min-height: 100%;
+}
+.search-btn{
+    color: white;
+}
+.search-btn:hover{
+    color: white;
+    background-color: tomato;
+}
+.recent-container{
+    max-height: 500px;
+}
+.page-footer{
+    color: white;
+}
+.list-link{
+    text-decoration: none;
+    color: white;
+    margin: 0;
+}
+.list-link:hover{
+    text-decoration: none;
+    font-weight: bold;
+    color: tomato;
+}
+.footer-copyright{
+    height: 50px;
+    background-color: rgb(83, 83, 83);
+    text-align: center;
 }

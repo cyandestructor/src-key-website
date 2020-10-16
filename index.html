@@ -9,9 +9,9 @@
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
         integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-    
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
     <link rel="stylesheet" href="/styles/desktop-home.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="shortcut icon" href="assets/img/src-key-logo-dark.svg" type="image/x-icon">
     <title>src key - development and programming news</title>
 </head>
@@ -20,8 +20,8 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark-main">
         <!-- Brand -->
         <a class="navbar-brand" href="/index.html">
-            <img src="assets/img/src-key-logo-clear.svg" width="40" height="40"
-                class="d-inline-block align-top" alt="src-key logo" loading="lazy">
+            <img src="assets/img/src-key-logo-clear.svg" width="40" height="40" class="d-inline-block align-top"
+                alt="src-key logo" loading="lazy">
             src-key
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -32,16 +32,16 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="/index.html">Home</a>
+                    <a class="nav-link nav-hover" href="/index.html">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Recent</a>
+                    <a class="nav-link nav-hover" href="#">Recent</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Top</a>
+                    <a class="nav-link nav-hover" href="#">Top</a>
                 </li>
-                <li class="nav-item nav-hover">
-                    <a class="nav-link" href="#">About us</a>
+                <li class="nav-item">
+                    <a class="nav-link nav-hover" href="#">About us</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
@@ -58,11 +58,129 @@
             </ul>
             <form class="form-inline my-2 my-lg-0">
                 <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                <button class="btn bg-dark-secondary search-btn my-2 my-sm-0 material-icons"
+                    type="submit">search</button>
             </form>
         </div>
     </nav>
-
+    <div class="page-container page-background bg-dark-page"">
+        <div class=" page-content mx-auto py-4 bg-white">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-md-8">
+                    <h2>Highlights</h2>
+                    <div id="highlightsCarousel" class="carousel slide" data-ride="carousel">
+                        <ol class="carousel-indicators">
+                            <li data-target="#highlightsCarousel" data-slide-to="0" class="active"></li>
+                            <li data-target="#highlightsCarousel" data-slide-to="1"></li>
+                            <li data-target="#highlightsCarousel" data-slide-to="2"></li>
+                        </ol>
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img src="assets/img/stock (1).jpg" class="d-block w-100" alt="...">
+                                <div class="carousel-caption d-none d-md-block">
+                                    <h5>First slide label</h5>
+                                    <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                <img src="assets/img/stock (2).jpg" class="d-block w-100" alt="...">
+                                <div class="carousel-caption d-none d-md-block">
+                                    <h5>Second slide label</h5>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                <img src="assets/img/stock (3).jpg" class="d-block w-100" alt="...">
+                                <div class="carousel-caption d-none d-md-block">
+                                    <h5>Third slide label</h5>
+                                    <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <a class="carousel-control-prev" href="#highlightsCarousel" role="button" data-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                        <a class="carousel-control-next" href="#highlightsCarousel" role="button" data-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Next</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-12 col-md-4">
+                    <div class="recent-container overflow-auto">
+                        <h2>Recent articles</h2>
+                        <ul class="list-unstyled">
+                            <li>
+                                <div class="card" style="width: 18rem;">
+                                    <img src="assets/img/stock (1).jpg" class="card-img-top" alt="...">
+                                    <div class="card-body">
+                                        <p class="card-text">Some quick example text to build on the card title and make
+                                            up the bulk of the card's content.</p>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="card" style="width: 18rem;">
+                                    <img src="assets/img/stock (2).jpg" class="card-img-top" alt="...">
+                                    <div class="card-body">
+                                        <p class="card-text">Some quick example text to build on the card title and make
+                                            up the bulk of the card's content.</p>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="card" style="width: 18rem;">
+                                    <img src="assets/img/stock (3).jpg" class="card-img-top" alt="...">
+                                    <div class="card-body">
+                                        <p class="card-text">Some quick example text to build on the card title and make
+                                            up the bulk of the card's content.</p>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <footer class="page-footer">
+        <div class="container-fluid bg-dark-main">
+            <div class="container">
+                <div class="row">
+                    <div class="col-6 p-3">
+                        <h5>src-key</h5>
+                        <p>
+                            src-key is a news website for software developers. Get the latest news about programming
+                            languages, frameworks, and more...
+                        </p>
+                    </div>
+                    <div class="col-6 p-3">
+                        <h5>Links</h5>
+                        <ul class="list-unstyled">
+                            <li>
+                                <a href="#" class="list-link">Home</a>
+                            </li>
+                            <li>
+                                <a href="#" class="list-link">Recent</a>
+                            </li>
+                            <li>
+                                <a href="#" class="list-link">Top</a>
+                            </li>
+                            <li>
+                                <a href="#" class="list-link">About us</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-copyright py-2">
+                <a href="/index.html" class="list-link">&copy; src-key</a>
+            </div>
+        </div>
+    </footer>
     <!-- Bootstrap -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
