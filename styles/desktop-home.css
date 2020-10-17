@@ -17,7 +17,7 @@ tomato
     color: tomato;
 }
 .carousel-caption{
-    background-color: rgba(63, 63, 63, 0.75);
+    background-color: rgba(61, 61, 61, 0.75);
     border-radius: 20px;
 }
 .page-background{
@@ -32,13 +32,6 @@ tomato
     max-width: 90%;
     min-height: 100%;
 }
-.search-btn{
-    color: white;
-}
-.search-btn:hover{
-    color: white;
-    background-color: tomato;
-}
 .recent-container{
     max-height: 500px;
 }
@@ -48,7 +41,6 @@ tomato
 .list-link{
     text-decoration: none;
     color: white;
-    margin: 0;
 }
 .list-link:hover{
     text-decoration: none;
@@ -56,7 +48,33 @@ tomato
     color: tomato;
 }
 .footer-copyright{
-    height: 50px;
-    background-color: rgb(83, 83, 83);
     text-align: center;
+}
+.user-button>button{
+    color: white;
+}
+.user-button:hover, .user-button:hover>button{
+    color: tomato;
+}
+.user-button:hover, .user-button:hover .user-icon svg{
+    fill: tomato;
+}
+.user-icon{
+    display: inline-block;
+}
+.user-icon svg{
+    fill: white;
+    height: 2em;
+    width: 2em;
+}
+.site-btn-primary{
+    background-color: rgb(83, 83, 83);
+    color: white;
+}
+.site-btn-primary:hover{
+    background-color: tomato;
+    color: white;
+}
+.dropdown-item.site-dropdown-item:active{
+    background-color: tomato;
 }
