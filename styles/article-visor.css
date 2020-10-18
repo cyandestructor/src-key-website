@@ -1,0 +1,36 @@
+.article-banner{
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+}
+.author-card{
+    
+}
+.article-body p:first-child:first-letter{
+    float: left;
+    text-transform: uppercase;
+    font-size: 4em;
+    line-height: 0.5em;
+    color: tomato;
+    padding: 0.25em;
+}
+.article-image{
+    max-width: 24em;
+    height: auto;
+    margin: 0.75em;
+}
+.comment-card{
+    color: white;
+    padding: 0.5rem;
+    border-radius: 0.25rem;
+}
+.comment-card-img{
+    width: 4rem;
+    height: 4rem;
+}
+.comment-card-img > img{
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+}
