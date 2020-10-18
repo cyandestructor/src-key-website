@@ -1,0 +1,24 @@
+.newsboard-panel{
+    padding: 1em;
+}
+.newsboard-panel h2{
+    font-size: 1.2em;
+    color: white;
+}
+.user-profile-pic{
+    background-color: tomato;
+    padding: 1em;
+    width: 100px;
+    height: 100px;
+    border: 0.25em solid rgb(61, 61, 61);
+    border-radius: 50%;
+    margin: 0 auto 1em auto;
+}
+.user-profile-pic>img{
+    object-fit: cover;
+}
+.newsboard-content{
+    border: 0.15em solid rgb(197, 197, 197);
+    border-radius: 0.25em;
+    padding: 1em;
+}

@@ -4,17 +4,19 @@
     object-fit: cover;
 }
 .user-profile-pic{
-    background-color: slateblue;
+    background-color: tomato;
     padding: 1em;
-    width: 100px;
-    height: 100px;
+    width: 200px;
+    height: 200px;
     border: 0.25em solid rgb(61, 61, 61);
     border-radius: 50%;
     margin: 0 auto 1em auto;
 }
+.user-profile-pic>img{
+    object-fit: cover;
+}
 .user-info{
     padding: 1em;
-    min-height: 500px;
     border-radius: 0.25em;
     color: white;
 }

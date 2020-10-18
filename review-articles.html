@@ -11,7 +11,7 @@
         integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 
     <link rel="stylesheet" href="/styles/desktop-home.css">
-    <link rel="stylesheet" href="/styles/profile.css">
+    <link rel="stylesheet" href="/styles/newsboard.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="shortcut icon" href="assets/img/src-key-logo-dark.svg" type="image/x-icon">
     <title>src key - development and programming news</title>
@@ -99,82 +99,93 @@
     <div class="page-container page-background bg-dark-page"">
         <div class=" page-content mx-auto py-4 bg-white">
         <div class="container">
-            <!-- User banner -->
             <div class="row">
-                <div class="col-12">
-                    <img src="/assets/img/user-banner-sample.jpg" alt="user banner" class="user-banner">
-                </div>
-            </div>
-            <!-- User info and activity -->
-            <div class="row my-3">
-                <!-- Info -->
-                <div class="col-12 col-md-3 user-info bg-dark-secondary">
+                <!-- Newsboard panel -->
+                <div class="col-12 col-md-3 col-lg-2 newsboard-panel bg-dark-secondary">
                     <div class="user-profile-pic">
                         <img src="/assets/img/user-propic-default-1.svg" alt="user profile picture">
                     </div>
-                    <!-- User name + lastname -->
-                    <h2>Bryan Duarte</h2>
-                    <h3>default-user</h3>
-                    <span style="font-weight: bold;">Level: </span><span id="userLevel">1</span>
-                    <span style="font-weight: bold;">Contributions: </span><span id="userContributions">3</span>
-                    <div style="font-weight: bold;">About:</div>
-                    <p id="userDescription">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus id aperiam, vero placeat
-                        soluta odio. Architecto tempora, amet veniam nostrum nihil possimus voluptate ad voluptatum,
-                        incidunt repudiandae ipsum exercitationem dolor!
-                    </p>
-                </div>
-                <!-- Activity -->
-                <div class="col-12 col-md-9">
-                    <div class="user-activity">
-                        <!-- Activity list -->
-                        <h2>Published by this user</h2>
+                    <h2>Newsboard panel</h2>
+                    <nav>
                         <ul class="list-unstyled">
+                            <li><a href="#" class="list-link">Write new article</a></li>
+                            <li><a href="#" class="list-link">Marked articles</a></li>
+                            <li><a href="#" class="list-link">Created articles</a></li>
+                            <li><a href="#" class="list-link">Review articles</a></li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="col-12 col-md-9 col-lg-10">
+                    <!-- Newsboard content -->
+                    <div class="newsboard-content">
+                        <ul class="list-unstyled">
+                            <h2>Article review panel</h2>
                             <li>
-                                <div class="media article-card bg-dark-secondary">
-                                    <div class="align-self-center article-card-img">
-                                        <img class="mr-3" src="assets/img/stock (1).jpg" alt="Article image">
-                                    </div>
-                                    <div class="media-body">
+                                <div class="article-card bg-dark-secondary">
+                                    <div class="media">
+                                        <div class="align-self-center article-card-img">
+                                            <img class="mr-3" src="assets/img/stock (1).jpg" alt="Article image">
+                                        </div>
+                                        <div class="media-body">
                                         <h5 class="mt-0">Sample Article</h5>
-                                        <p style="margin: 0; font-size: 0.75em;">Author: Bryan Duarte | Date: 10/17/2020
-                                        </p>
-                                        Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante
-                                        sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra
-                                        turpis...
-                                        <a href="#" class="site-text-link">Read more</a>
+                                            <p style="margin: 0; font-size: 0.75em;">Author: Bryan Duarte | Date: 10/17/2020
+                                            </p>
+                                            Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante
+                                            sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra
+                                            turpis...
+                                            <a href="#" class="site-text-link">Read more</a>
+                                        </div>
+                                    </div>
+                                    <div class="mt-2 d-flex justify-content-end">
+                                        <a href="#" class="btn site-btn-primary ml-1">Review</a>
+                                        <a href="#" class="btn site-btn-primary ml-1">Approve</a>
+                                        <a href="#" class="btn site-btn-primary ml-1">Reject</a>
                                     </div>
                                 </div>
                             </li>
                             <li>
-                                <div class="media article-card bg-dark-secondary">
-                                    <div class="align-self-center article-card-img">
-                                        <img class="mr-3" src="assets/img/stock (2).jpg" alt="Article image">
-                                    </div>
-                                    <div class="media-body">
+                                <div class="article-card bg-dark-secondary">
+                                    <div class="media">
+                                        <div class="align-self-center article-card-img">
+                                            <img class="mr-3" src="assets/img/stock (2).jpg" alt="Article image">
+                                        </div>
+                                        <div class="media-body">
                                         <h5 class="mt-0">Sample Article</h5>
-                                        <p style="margin: 0; font-size: 0.75em;">Author: Bryan Duarte | Date: 10/17/2020
-                                        </p>
-                                        Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante
-                                        sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra
-                                        turpis...
-                                        <a href="#" class="site-text-link">Read more</a>
+                                            <p style="margin: 0; font-size: 0.75em;">Author: Bryan Duarte | Date: 10/17/2020
+                                            </p>
+                                            Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante
+                                            sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra
+                                            turpis...
+                                            <a href="#" class="site-text-link">Read more</a>
+                                        </div>
+                                    </div>
+                                    <div class="mt-2 d-flex justify-content-end">
+                                        <a href="#" class="btn site-btn-primary ml-1">Review</a>
+                                        <a href="#" class="btn site-btn-primary ml-1">Approve</a>
+                                        <a href="#" class="btn site-btn-primary ml-1">Reject</a>
                                     </div>
                                 </div>
                             </li>
                             <li>
-                                <div class="media article-card bg-dark-secondary">
-                                    <div class="align-self-center article-card-img">
-                                        <img class="mr-3" src="assets/img/stock (3).jpg" alt="Article image">
-                                    </div>
-                                    <div class="media-body">
+                                <div class="article-card bg-dark-secondary">
+                                    <div class="media">
+                                        <div class="align-self-center article-card-img">
+                                            <img class="mr-3" src="assets/img/stock (3).jpg" alt="Article image">
+                                        </div>
+                                        <div class="media-body">
                                         <h5 class="mt-0">Sample Article</h5>
-                                        <p style="margin: 0; font-size: 0.75em;">Author: Bryan Duarte | Date: 10/17/2020
-                                        </p>
-                                        Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante
-                                        sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra
-                                        turpis...
-                                        <a href="#" class="site-text-link">Read more</a>
+                                            <p style="margin: 0; font-size: 0.75em;">Author: Bryan Duarte | Date: 10/17/2020
+                                            </p>
+                                            Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante
+                                            sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra
+                                            turpis...
+                                            <a href="#" class="site-text-link">Read more</a>
+                                        </div>
+                                    </div>
+                                    <div class="mt-2 d-flex justify-content-end">
+                                        <a href="#" class="btn site-btn-primary ml-1">Review</a>
+                                        <a href="#" class="btn site-btn-primary ml-1">Approve</a>
+                                        <a href="#" class="btn site-btn-primary ml-1">Reject</a>
                                     </div>
                                 </div>
                             </li>
