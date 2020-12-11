@@ -5,6 +5,7 @@
  */
 package models;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -22,12 +23,45 @@ public class Article {
     private long upVotes;
     private long downVotes;
     private char articleState;
+    
+    private String authorName;
+    
+    private ArrayList<Multimedia> articleMultimedia;
+
+    public Article(long id, String title, Date articleDate, String description, String body, long author, Date creationDate, long upVotes, long downVotes, char articleState) {
+        this.id = id;
+        this.title = title;
+        this.articleDate = articleDate;
+        this.description = description;
+        this.body = body;
+        this.author = author;
+        this.creationDate = creationDate;
+        this.upVotes = upVotes;
+        this.downVotes = downVotes;
+        this.articleState = articleState;
+    }
 
     public Article(String title, String description, String body, long author) {
         this.title = title;
         this.description = description;
         this.body = body;
         this.author = author;
+    }
+
+    public String getAuthorName() {
+        return authorName;
+    }
+
+    public void setAuthorName(String authorName) {
+        this.authorName = authorName;
+    }
+
+    public ArrayList<Multimedia> getArticleMultimedia() {
+        return articleMultimedia;
+    }
+
+    public void setArticleMultimedia(ArrayList<Multimedia> articleMultimedia) {
+        this.articleMultimedia = articleMultimedia;
     }
 
     public String getBody() {

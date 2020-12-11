@@ -68,18 +68,33 @@ AS
 		username,
 		firstName,
 		lastname,
-		uDescription,
-		profilePic,
+		ISNULL(uDescription, '') uDescription,
+		ISNULL(profilePic, '') profilePic,
 		email,
 		uLevel,
 		uType,
 		accountState,
 		regDate,
-		lastConnection
+		ISNULL(lastConnection, GETDATE()) lastConnection
 	FROM
 		Users
 	Where
 		userID = @ID;
+GO
+
+IF EXISTS (SELECT name FROM sysobjects WHERE name = 'GetUserFullName')
+	DROP PROCEDURE GetUserFullName;
+GO
+
+CREATE PROCEDURE GetUserFullName
+	@UserId		bigint
+AS
+	SELECT
+		CONCAT(firstName, ' ', lastname) as FullName
+	FROM
+		Users
+	WHERE
+		userID = @UserId;
 GO
 
 IF EXISTS (SELECT name FROM sysobjects WHERE name = 'SubmitArticle')
@@ -130,27 +145,9 @@ IF EXISTS (SELECT name FROM sysobjects WHERE name = 'GetArticles')
 GO
 
 CREATE PROCEDURE GetArticles
-	@PublishedOnly	bit
+	@State		char(1)
 AS
-	IF (@PublishedOnly = 1)
-		BEGIN
-			SELECT
-				aID,
-				title,
-				aDate,
-				aDesc,
-				aBody,
-				author,
-				creationDate,
-				upVotes,
-				downVotes,
-				aState
-			FROM
-				Articles
-			WHERE
-				aState = 'p';
-		END
-	ELSE
+	IF (@State = 'a')
 		BEGIN
 			SELECT
 				aID,
@@ -166,6 +163,179 @@ AS
 			FROM
 				Articles;
 		END
+	ELSE
+		BEGIN
+			SELECT
+				aID,
+				title,
+				aDate,
+				aDesc,
+				aBody,
+				author,
+				creationDate,
+				upVotes,
+				downVotes,
+				aState
+			FROM
+				Articles
+			WHERE
+				aState = @State;
+		END
+GO
+
+IF EXISTS (SELECT name FROM sysobjects WHERE name = 'GetTopArticles')
+	DROP PROCEDURE GetTopArticles;
+GO
+
+CREATE PROCEDURE GetTopArticles
+
+AS
+	SELECT TOP 5
+		aID,
+		title,
+		aDate,
+		aDesc,
+		aBody,
+		author,
+		creationDate,
+		upVotes,
+		downVotes,
+		aState
+	FROM
+		Articles
+	WHERE
+		aState = 'p'
+	ORDER BY
+		upVotes DESC;
+GO
+
+IF EXISTS (SELECT name FROM sysobjects WHERE name = 'GetArticleByID')
+	DROP PROCEDURE GetArticleByID;
+GO
+
+CREATE PROCEDURE GetArticleByID
+	@ArticleID		bigint
+AS
+	SELECT
+		aID,
+		title,
+		aDate,
+		aDesc,
+		aBody,
+		author,
+		creationDate,
+		upVotes,
+		downVotes,
+		aState
+	FROM
+		Articles
+	WHERE
+		aID = @ArticleID;
+GO
+
+IF EXISTS (SELECT name FROM sysobjects WHERE name = 'SearchArticles')
+	DROP PROCEDURE SearchArticles;
+GO
+
+CREATE PROCEDURE SearchArticles
+	@Query		nvarchar(150)
+AS
+	SELECT
+		A.aID,
+		title,
+		aDate,
+		aDesc,
+		aBody,
+		author,
+		creationDate,
+		upVotes,
+		downVotes,
+		aState
+	FROM
+	(SELECT
+		A.aID AS aID
+	FROM
+		Articles AS A
+		INNER JOIN ArticlesCategories AS AC ON AC.aID = A.aID
+		INNER JOIN Categories AS C ON C.ctgID = AC.ctgID
+	WHERE
+		@Query LIKE ('%' + C.ctgName + '%') OR @Query LIKE ('%' + A.title + '%')
+	GROUP BY
+		A.aID) AS sub
+	INNER JOIN Articles AS A on A.aID = sub.aID;
+		
+GO
+
+IF EXISTS (SELECT name FROM sysobjects WHERE name = 'GetArticlesByUser')
+	DROP PROCEDURE GetArticlesByUser;
+GO
+
+CREATE PROCEDURE GetArticlesByUser
+	@UserID		bigint,
+	@State		char(1) = null
+AS
+	IF @State IS NOT NULL
+		BEGIN
+			SELECT
+				aID,
+				title,
+				aDate,
+				aDesc,
+				aBody,
+				author,
+				creationDate,
+				upVotes,
+				downVotes,
+				aState
+			FROM
+				Articles
+			WHERE
+				aState = @State AND author = @UserID;
+		END
+	ELSE
+		BEGIN
+			SELECT
+				aID,
+				title,
+				aDate,
+				aDesc,
+				aBody,
+				author,
+				creationDate,
+				upVotes,
+				downVotes,
+				aState
+			FROM
+				Articles
+			WHERE
+				author = @UserID;
+		END
+GO
+
+IF EXISTS (SELECT name FROM sysobjects WHERE name = 'GetRecentArticles')
+	DROP PROCEDURE GetRecentArticles;
+GO
+
+CREATE PROCEDURE GetRecentArticles
+
+AS
+	SELECT TOP 5
+		aID,
+		title,
+		aDate,
+		aDesc,
+		aBody,
+		author,
+		creationDate,
+		upVotes,
+		downVotes,
+		aState
+	FROM
+		Articles
+	WHERE
+		aState = 'p'
+	ORDER BY
+		aDate DESC;
 GO
 
 IF EXISTS (SELECT name FROM sysobjects WHERE name = 'SetArticleCategory')
@@ -212,17 +382,46 @@ IF EXISTS (SELECT name FROM sysobjects WHERE name = 'GetArticleMutimedia')
 GO
 
 CREATE PROCEDURE GetArticleMutimedia
-	@ArticleID	bigint
+	@ArticleID	bigint,
+	@FileType	char(1) = null
 AS
-	SELECT
-		mtmID,
-		fileType,
-		filePath,
-		uploadDate
-	FROM
-		Multimedia
-	WHERE
-		articleID = @ArticleID;
+	IF @FileType IS NOT NULL
+		BEGIN
+			SELECT
+				mtmID,
+				fileType,
+				filePath,
+				uploadDate
+			FROM
+				Multimedia
+			WHERE
+				articleID = @ArticleID;
+		END
+	ELSE
+		BEGIN
+			SELECT
+				mtmID,
+				fileType,
+				filePath,
+				uploadDate
+			FROM
+				Multimedia
+			WHERE
+				articleID = @ArticleID AND fileType = @FileType;
+		END
+GO
+
+IF EXISTS (SELECT name FROM sysobjects WHERE name = 'SetArticleState')
+	DROP PROCEDURE SetArticleState;
+GO
+
+CREATE PROCEDURE SetArticleState
+	@ArticleID	bigint,
+	@State		char(1)
+AS
+	UPDATE Articles
+		SET aState = @State
+		WHERE aID = @ArticleID;
 GO
 
 IF EXISTS (SELECT name FROM sysobjects WHERE name = 'RegisterCategory')
@@ -255,6 +454,77 @@ AS
 	RETURN CONVERT(INT, @CategoryID);
 GO
 
+IF EXISTS (SELECT name FROM sysobjects WHERE name = 'CreateComment')
+	DROP PROCEDURE CreateComment;
+GO
+
+CREATE PROCEDURE CreateComment
+	@ArticleID		bigint,
+	@UserID			bigint,
+	@Body			text,
+	@Parent			bigint = null
+AS
+	BEGIN TRAN;
+
+	IF @Parent IS NULL
+		INSERT INTO Comments (cText) VALUES (@Body);
+	ELSE
+		INSERT INTO Comments (cText, cParent) VALUES (@Body, @Parent);
+
+	DECLARE @LastCommentID bigint = IDENT_CURRENT('Comments');
+
+	INSERT INTO UsersComments (userID, aID, cID) VALUES (@UserID, @ArticleID, @LastCommentID);
+
+	IF @@ERROR = 0
+		COMMIT;
+	ELSE
+		ROLLBACK;
+GO
+
+IF EXISTS (SELECT name FROM sysobjects WHERE name = 'GetArticleComments')
+	DROP PROCEDURE GetArticleComments;
+GO
+
+CREATE PROCEDURE GetArticleComments
+	@ArticleID		bigint
+AS
+	SELECT
+		C.cID,
+		C.cText,
+		C.upVotes,
+		C.downVotes,
+		U.userID,
+		U.username
+	FROM
+		Comments AS C
+		INNER JOIN UsersComments AS UC ON UC.cID = C.cID
+		LEFT JOIN Users AS U ON U.userID = UC.ucID
+	WHERE
+		UC.aID = @ArticleID;
+GO
+
+IF EXISTS (SELECT name FROM sysobjects WHERE name = 'GetChildrenComments')
+	DROP PROCEDURE GetChildrenComments;
+GO
+
+CREATE PROCEDURE GetChildrenComments
+	@CommentID		bigint
+AS
+	SELECT
+		C.cID,
+		C.cText,
+		C.upVotes,
+		C.downVotes,
+		U.userID,
+		U.username
+	FROM
+		Comments AS C
+		INNER JOIN UsersComments AS UC ON UC.cID = C.cID
+		LEFT JOIN Users AS U ON U.userID = UC.ucID
+	WHERE
+		C.cParent = @CommentID;
+GO
+
 IF EXISTS (SELECT name FROM sysobjects WHERE name = 'ProcedureE')
 	DROP PROCEDURE ProcedureE;
 GO
@@ -266,4 +536,10 @@ AS
 GO
 
 select * from users;
+select * from Articles;
+select * from Multimedia;
+select * from UsersComments;
+select * from Comments;
+select * from ArticlesCategories;
+select * from Categories;
 select @@servername

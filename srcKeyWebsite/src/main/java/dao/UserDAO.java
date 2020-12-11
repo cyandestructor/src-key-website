@@ -45,6 +45,34 @@ public class UserDAO {
         return 0;
     }
     
+    public static String GetUserFullName(long userId){
+        Connection con = null;
+        try {
+            con = DbConnection.getConnection();
+            CallableStatement statement = con.prepareCall("call GetUserFullName(?)");
+            statement.setLong(1, userId);
+            
+            ResultSet result = statement.executeQuery();
+            
+            while(result.next()){
+                String name = result.getString(1);
+                return name;
+            }
+            
+        } catch (java.sql.SQLException ex) {
+            System.out.println(ex.getMessage());
+        } finally {
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+        return null;
+    }
+    
     public static User LogIn(String username, String password){
         Connection con = null;
         try {
@@ -98,8 +126,8 @@ public class UserDAO {
                 String profilePic = result.getString(6);
                 String email = result.getString(7);
                 int level = result.getInt(8);
-                char userType = (char)result.getByte(9);
-                char accountState = (char)result.getByte(10);
+                char userType = result.getString(9).charAt(0);
+                char accountState = result.getString(10).charAt(0);
                 Date registrationDate = result.getDate(11);
                 Date lastConnection = result.getDate(12);
                 

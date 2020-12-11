@@ -7,6 +7,7 @@ package controllers;
 
 import dao.ArticleDAO;
 import dao.MultimediaDAO;
+import dao.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -16,13 +17,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import models.Article;
+import models.User;
 
 /**
  *
  * @author delli
  */
-@WebServlet(name = "Home", urlPatterns = {"/Home"})
-public class Home extends HttpServlet {
+@WebServlet(name = "Profile", urlPatterns = {"/Profile"})
+public class Profile extends HttpServlet {
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -37,22 +39,20 @@ public class Home extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        ArrayList<Article> recentArticles = ArticleDAO.GetRecentArticles();
+        long userID = Long.parseLong(request.getParameter("userId"));
+        User user = UserDAO.GetUserByID(userID);
         
-        for (Article article : recentArticles){
+        ArrayList<Article> userArticles = ArticleDAO.GetUserArticles(userID, 'p');
+        
+        for (Article article : userArticles){
             article.setArticleMultimedia(MultimediaDAO.GetArticleMultimeda(article.getId(), 'i'));
+            article.setAuthorName(UserDAO.GetUserFullName(article.getAuthor()));
         }
         
-        ArrayList<Article> topArticles = ArticleDAO.GetTopArticles();
+        request.setAttribute("userArticles", userArticles);
+        request.setAttribute("user", user);
         
-        for (Article article : topArticles){
-            article.setArticleMultimedia(MultimediaDAO.GetArticleMultimeda(article.getId(), 'i'));
-        }
-        
-        request.setAttribute("recentArticles", recentArticles);
-        request.setAttribute("topArticles", topArticles);
-        
-        request.getRequestDispatcher("index.jsp").forward(request, response);
+        request.getRequestDispatcher("profile.jsp").forward(request, response);
     }
 
     /**

@@ -6,7 +6,9 @@
 package controllers;
 
 import dao.ArticleDAO;
+import dao.CommentDAO;
 import dao.MultimediaDAO;
+import dao.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -16,13 +18,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import models.Article;
+import models.Comment;
+import models.User;
 
 /**
  *
  * @author delli
  */
-@WebServlet(name = "Home", urlPatterns = {"/Home"})
-public class Home extends HttpServlet {
+@WebServlet(name = "ArticleVisor", urlPatterns = {"/ArticleVisor"})
+public class ArticleVisor extends HttpServlet {
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -37,22 +41,25 @@ public class Home extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        ArrayList<Article> recentArticles = ArticleDAO.GetRecentArticles();
+        long articleID = Long.parseLong(request.getParameter("articleID"));
+        Article article = ArticleDAO.GetArticleByID(articleID);
+        article.setArticleMultimedia(MultimediaDAO.GetArticleMultimeda(articleID));
+        article.setAuthorName(UserDAO.GetUserFullName(article.getAuthor()));
         
-        for (Article article : recentArticles){
-            article.setArticleMultimedia(MultimediaDAO.GetArticleMultimeda(article.getId(), 'i'));
+        User author = UserDAO.GetUserByID(article.getAuthor());
+        
+        ArrayList<Comment> articleComments = CommentDAO.GetArticleComments(articleID);
+        
+        for(Comment comment : articleComments){
+            comment.setChildrenComments(CommentDAO.GetChildrenComments(comment.getId()));
         }
         
-        ArrayList<Article> topArticles = ArticleDAO.GetTopArticles();
+        request.setAttribute("articleComments", articleComments);
         
-        for (Article article : topArticles){
-            article.setArticleMultimedia(MultimediaDAO.GetArticleMultimeda(article.getId(), 'i'));
-        }
+        request.setAttribute("article", article);
+        request.setAttribute("author", author);
         
-        request.setAttribute("recentArticles", recentArticles);
-        request.setAttribute("topArticles", topArticles);
-        
-        request.getRequestDispatcher("index.jsp").forward(request, response);
+        request.getRequestDispatcher("article-visor.jsp").forward(request, response);
     }
 
     /**

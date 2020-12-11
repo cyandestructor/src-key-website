@@ -7,23 +7,28 @@ package controllers;
 
 import dao.ArticleDAO;
 import dao.CategoryDAO;
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
 import models.Article;
 import models.Category;
 import models.User;
+import utility.FileUtils;
 
 /**
  *
  * @author delli
  */
 @WebServlet(name = "SubmitArticle", urlPatterns = {"/SubmitArticle"})
+@MultipartConfig(maxFileSize = 1024 * 1024 * 5, maxRequestSize = 1024 * 1024 * 25)
 public class SubmitArticle extends HttpServlet {
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -53,6 +58,25 @@ public class SubmitArticle extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
+        Part file = request.getPart("images");
+
+        String path = request.getServletContext().getRealPath("");
+        File fileSaveDir = new File(path + utility.FileUtils.RUTE_USER_IMAGE);
+        if (!fileSaveDir.exists()) {
+            fileSaveDir.mkdir();
+        }
+        
+        String contentType;
+        String nameImage;
+        String fullPath = "";
+        
+        if(file != null){
+            contentType = file.getContentType();
+            nameImage = file.getName() + System.currentTimeMillis() + utility.FileUtils.GetExtension(contentType);
+            fullPath = path + utility.FileUtils.RUTE_USER_IMAGE + "/" + nameImage;
+            file.write(fullPath);
+        }
+        
         String title = request.getParameter("title");
         String description = request.getParameter("description");
         String body = request.getParameter("body");
@@ -73,9 +97,14 @@ public class SubmitArticle extends HttpServlet {
                         ArticleDAO.SetArticleCategory(articleID, ctgID);
                     }
                 }
+                if (fullPath != "") {
+                    ArticleDAO.SetArticleMultimedia(articleID, fullPath, 'i');
+                }
+                response.sendRedirect("article-editor.jsp"); // CHECK THIS
             }
             
         }
+        response.sendRedirect("index.jsp");
     }
 
     /**

@@ -5,6 +5,8 @@
  */
 package models;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author delli
@@ -15,6 +17,24 @@ public class Comment {
     private long upVotes;
     private long downVotes;
     private long parentID;
+    
+    private long userId;
+    private String posterUsername;
+    
+    private ArrayList<Comment> childrenComments;
+
+    public Comment(long id, String commentText, long upVotes, long downVotes, long userId, String posterUsername) {
+        this.id = id;
+        this.commentText = commentText;
+        this.upVotes = upVotes;
+        this.downVotes = downVotes;
+        this.userId = userId;
+        this.posterUsername = posterUsername;
+    }
+
+    public Comment(String commentText) {
+        this.commentText = commentText;
+    }
 
     public long getId() {
         return id;
@@ -22,6 +42,30 @@ public class Comment {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public ArrayList<Comment> getChildrenComments() {
+        return childrenComments;
+    }
+
+    public void setChildrenComments(ArrayList<Comment> childrenComments) {
+        this.childrenComments = childrenComments;
+    }
+
+    public long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(long userId) {
+        this.userId = userId;
+    }
+
+    public String getPosterUsername() {
+        return posterUsername;
+    }
+
+    public void setPosterUsername(String posterUsername) {
+        this.posterUsername = posterUsername;
     }
 
     public String getCommentText() {

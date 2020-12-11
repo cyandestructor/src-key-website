@@ -18,6 +18,13 @@ public class Multimedia {
     private long articleID;
     private Date uploadDate;
 
+    public Multimedia(long id, char fileType, String path, Date uploadDate) {
+        this.id = id;
+        this.fileType = fileType;
+        this.path = path;
+        this.uploadDate = uploadDate;
+    }
+
     public long getId() {
         return id;
     }
