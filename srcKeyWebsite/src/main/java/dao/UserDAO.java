@@ -1,0 +1,122 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package dao;
+
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import models.User;
+
+/**
+ *
+ * @author delli
+ */
+public class UserDAO {
+    
+    public static int RegisterUser(User user){
+        Connection con = null;
+        try {
+            con = DbConnection.getConnection();
+            CallableStatement statement = con.prepareCall("call RegisterUser(?,?,?,?,?)");
+            statement.setString(1, user.getUsername());
+            statement.setString(2, user.getFirstName());
+            statement.setString(3, user.getLastName());
+            statement.setString(4, user.getEmail());
+            statement.setString(5, user.getPassword());
+            return statement.executeUpdate();
+        } catch (java.sql.SQLException ex) {
+            System.out.println(ex.getMessage());
+        } finally {
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+        return 0;
+    }
+    
+    public static User LogIn(String username, String password){
+        Connection con = null;
+        try {
+            con = DbConnection.getConnection();
+            CallableStatement statement = con.prepareCall("call LogIn(?,?)");
+            statement.setString(1, username);
+            statement.setString(2, password);
+            
+            ResultSet result = statement.executeQuery();
+            
+            while(result.next()){
+                long id = result.getLong(1);
+                String userName = result.getString(2);
+                String firstName = result.getString(3);
+                String lastName = result.getString(4);
+                char userType = result.getString(5).charAt(0);
+                char accountState = result.getString(6).charAt(0);
+                
+                return new User(id, userName, firstName, lastName, userType, accountState);
+            }
+            
+        } catch (java.sql.SQLException ex) {
+            System.out.println(ex.getMessage());
+        } finally {
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+        return null;
+    }
+    
+    public static User GetUserByID(long id){
+        Connection con = null;
+        try {
+            con = DbConnection.getConnection();
+            CallableStatement statement = con.prepareCall("call GetUser(?)");
+            statement.setLong(1, id);
+            
+            ResultSet result = statement.executeQuery();
+            
+            while(result.next()){
+                long userId = result.getLong(1);
+                String userName = result.getString(2);
+                String firstName = result.getString(3);
+                String lastName = result.getString(4);
+                String description = result.getString(5);
+                String profilePic = result.getString(6);
+                String email = result.getString(7);
+                int level = result.getInt(8);
+                char userType = (char)result.getByte(9);
+                char accountState = (char)result.getByte(10);
+                Date registrationDate = result.getDate(11);
+                Date lastConnection = result.getDate(12);
+                
+                return new User(userId, userName, email, firstName, lastName, description, profilePic, level, userType, accountState, registrationDate, lastConnection);
+            }
+            
+        } catch (java.sql.SQLException ex) {
+            System.out.println(ex.getMessage());
+        } finally {
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+        return null;
+    }
+}

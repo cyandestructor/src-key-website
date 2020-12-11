@@ -1,0 +1,124 @@
+/* Colors
+rgb(61, 61, 61);
+rgb(83, 83, 83);
+rgb(23, 23, 23);
+tomato
+*/
+.bg-dark-main{
+    background-color: rgb(23, 23, 23);
+}
+.bg-dark-secondary{
+    background-color: rgb(83, 83, 83);
+}
+.bg-dark-page{
+    background-color: rgb(61, 61, 61);
+}
+.navbar-dark .navbar-nav .nav-hover:hover{
+    color: tomato;
+}
+.carousel-caption{
+    background-color: rgba(61, 61, 61, 0.75);
+    border-radius: 20px;
+}
+.page-background{
+    background-image: url("assets/img/src-key-logo-bg.svg");
+    background-size: 50px;
+}
+.page-container{
+    min-width: 100%;
+    min-height: 100%;
+}
+.page-content{
+    max-width: 90%;
+    min-height: 100%;
+}
+.recent-container{
+    max-height: 500px;
+}
+.page-footer{
+    color: white;
+}
+.list-link{
+    text-decoration: none;
+    color: white;
+}
+.list-link:hover{
+    text-decoration: none;
+    font-weight: bold;
+    color: tomato;
+}
+.site-text-link{
+    text-decoration: none;
+    color: tomato;   
+}
+.site-text-link:hover{
+    text-decoration: none;
+    font-weight: bold;
+    color: tomato;
+}
+.page-item.site-page-item.site-active .page-link{
+    background-color: tomato;
+    color: white;
+}
+.page-item.site-page-item .page-link{
+    color: tomato;
+}
+.page-item.site-page-item.disabled .page-link{
+    color: rgb(83, 83, 83)
+}
+.footer-copyright{
+    text-align: center;
+}
+.user-button>button{
+    color: white;
+}
+.user-button:hover, .user-button:hover>button{
+    color: tomato;
+}
+.user-button:hover, .user-button:hover .user-icon svg{
+    fill: tomato;
+}
+.user-icon{
+    display: inline-block;
+}
+.user-icon svg{
+    fill: white;
+    height: 2em;
+    width: 2em;
+}
+.site-btn-primary{
+    background-color: rgb(61, 61, 61);
+    color: white;
+}
+.site-btn-primary:hover{
+    background-color: tomato;
+    color: white;
+}
+.dropdown-item.site-dropdown-item:active{
+    background-color: tomato;
+}
+
+/* Article card */
+
+.article-card{
+    padding: 1em;
+    border-radius: 0.25em;
+    margin-bottom: 0.5em;
+}
+.article-card-img{
+    width: 100px;
+    height: 100px;
+    margin-right: 1em;
+}
+.article-card-img img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 0.5em;
+}
+.article-card .media-body{
+    border: 0.15em solid rgb(197, 197, 197);
+    border-radius: 0.25em;
+    padding: 0.5em;
+    color: white;
+}
