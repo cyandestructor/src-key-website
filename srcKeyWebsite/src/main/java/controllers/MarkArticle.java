@@ -5,7 +5,7 @@
  */
 package controllers;
 
-import dao.UserDAO;
+import dao.ArticleDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -19,8 +19,31 @@ import models.User;
  *
  * @author delli
  */
-@WebServlet(name = "Register", urlPatterns = {"/Register"})
-public class Register extends HttpServlet {
+@WebServlet(name = "MarkArticle", urlPatterns = {"/MarkArticle"})
+public class MarkArticle extends HttpServlet {
+
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    /**
+     * Handles the HTTP <code>GET</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+   
+        User user = (User)request.getSession().getAttribute("user");
+        long articleID = Long.parseLong(request.getParameter("articleID"));
+        
+        if(user != null){
+            ArticleDAO.MarkArticle(user.getId(), articleID);
+        }
+        
+        response.sendRedirect("ArticleVisor?articleID=" + Long.toString(articleID));
+    }
 
     /**
      * Handles the HTTP <code>POST</code> method.
@@ -33,20 +56,7 @@ public class Register extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String username = request.getParameter("username");
-        String firstname = request.getParameter("firstName");
-        String lastname = request.getParameter("lastName");
-        String email = request.getParameter("email");
-        String password = request.getParameter("password");
         
-        User user = new User(username, password, email, firstname, lastname);
-        if(UserDAO.RegisterUser(user) == 1){
-            //request.getRequestDispatcher("registration.jsp").forward(request, response);
-            response.sendRedirect("Home");
-        }else{
-            //request.getRequestDispatcher("registration.jsp").forward(request, response);
-            response.sendRedirect("registration.jsp");
-        }
     }
 
     /**

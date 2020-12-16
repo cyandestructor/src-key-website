@@ -146,6 +146,113 @@ public class ArticleDAO {
         return articles;
     }
     
+    public static ArrayList<Article> SearchArticles(String query){
+        
+        ArrayList<Article> articles = new ArrayList<Article>();
+        
+        Connection con = null;
+        try {
+            con = DbConnection.getConnection();
+            CallableStatement statement = con.prepareCall("call SearchArticles(?)");
+            statement.setString(1, query);
+            
+            ResultSet result = statement.executeQuery();
+            
+            while(result.next()){
+                long id = result.getLong(1);
+                String title = result.getString(2);
+                Date aDate = result.getDate(3);
+                String desc = result.getString(4);
+                String body = result.getString(5);
+                long author = result.getLong(6);
+                Date creationDate = result.getDate(7);
+                long upVotes = result.getLong(8);
+                long downVotes = result.getLong(9);
+                char aState = result.getString(10).charAt(0);
+                
+                Article article = new Article(id, title, aDate, desc, body, author, creationDate, upVotes, downVotes, aState);
+                articles.add(article);
+            }
+            
+        } catch (java.sql.SQLException ex) {
+            System.out.println(ex.getMessage());
+        } finally {
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(ArticleDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+        
+        return articles;
+    }
+    
+    public static int MarkArticle(long articleID, long userID){
+        Connection con = null;
+        try {
+            con = DbConnection.getConnection();
+            CallableStatement statement = con.prepareCall("call AddMarkedArticle(?,?)");
+            statement.setLong(1, userID);
+            statement.setLong(2, articleID);
+            
+            return statement.executeUpdate();
+        } catch (java.sql.SQLException ex) {
+            System.out.println(ex.getMessage());
+        } finally {
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(ArticleDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+        return 0;
+    }
+    
+    public static ArrayList<Article> GetMarkedArticles(long userID){
+        ArrayList<Article> articles = new ArrayList<Article>();
+        Connection con = null;
+        try {
+            con = DbConnection.getConnection();
+            CallableStatement statement = con.prepareCall("call GetMarkedArticles(?)");
+            statement.setLong(1, userID);
+            
+            ResultSet result = statement.executeQuery();
+            
+            while(result.next()){
+                long id = result.getLong(1);
+                String title = result.getString(2);
+                Date aDate = result.getDate(3);
+                String desc = result.getString(4);
+                String body = result.getString(5);
+                long author = result.getLong(6);
+                Date creationDate = result.getDate(7);
+                long upVotes = result.getLong(8);
+                long downVotes = result.getLong(9);
+                char aState = result.getString(10).charAt(0);
+                
+                Article article = new Article(id, title, aDate, desc, body, author, creationDate, upVotes, downVotes, aState);
+                articles.add(article);
+            }
+            
+        } catch (java.sql.SQLException ex) {
+            System.out.println(ex.getMessage());
+        } finally {
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(ArticleDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+        
+        return articles;
+    }
+    
     public static Article GetArticleByID(long articleID){
         Connection con = null;
         try {
@@ -193,6 +300,47 @@ public class ArticleDAO {
             CallableStatement statement = con.prepareCall("call GetArticlesByUser(?,?)");
             statement.setLong(1, userId);
             statement.setString(2, Character.toString(state));
+            
+            ResultSet result = statement.executeQuery();
+            
+            while(result.next()){
+                long id = result.getLong(1);
+                String title = result.getString(2);
+                Date aDate = result.getDate(3);
+                String desc = result.getString(4);
+                String body = result.getString(5);
+                long author = result.getLong(6);
+                Date creationDate = result.getDate(7);
+                long upVotes = result.getLong(8);
+                long downVotes = result.getLong(9);
+                char aState = result.getString(10).charAt(0);
+                
+                Article article = new Article(id, title, aDate, desc, body, author, creationDate, upVotes, downVotes, aState);
+                articles.add(article);
+            }
+            
+        } catch (java.sql.SQLException ex) {
+            System.out.println(ex.getMessage());
+        } finally {
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(ArticleDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+        
+        return articles;
+    }
+    
+    public static ArrayList<Article> GetUserArticles(long userId){
+        ArrayList<Article> articles = new ArrayList<Article>();
+        Connection con = null;
+        try {
+            con = DbConnection.getConnection();
+            CallableStatement statement = con.prepareCall("call GetArticlesByUser(?)");
+            statement.setLong(1, userId);
             
             ResultSet result = statement.executeQuery();
             

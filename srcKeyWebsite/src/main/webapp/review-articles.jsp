@@ -48,10 +48,10 @@
                     <h2>Newsboard panel</h2>
                     <nav>
                         <ul class="list-unstyled">
-                            <li><a href="#" class="list-link">Write new article</a></li>
-                            <li><a href="#" class="list-link">Marked articles</a></li>
-                            <li><a href="#" class="list-link">Created articles</a></li>
-                            <li><a href="#" class="list-link">Review articles</a></li>
+                            <li><a href="article-editor.jsp" class="list-link">Write new article</a></li>
+                            <li><a href="Newsboard" class="list-link">Marked articles</a></li>
+                            <li><a href="CreatedArticles" class="list-link">Created articles</a></li>
+                            <li><a href="ReviewArticles" class="list-link">Review articles</a></li>
                         </ul>
                     </nav>
                 </div>

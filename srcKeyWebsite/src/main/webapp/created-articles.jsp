@@ -4,7 +4,17 @@
     Author     : delli
 --%>
 
+<%@page import="models.Article"%>
+<%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
+<%
+    ArrayList<Article> articles = (ArrayList<Article>)request.getAttribute("articles");
+    if(articles == null){
+        articles = new ArrayList<Article>();
+    }
+%>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -33,15 +43,15 @@
                 <!-- Newsboard panel -->
                 <div class="col-12 col-md-3 col-lg-2 newsboard-panel bg-dark-secondary">
                     <div class="user-profile-pic">
-                        <img src="/assets/img/user-propic-default-1.svg" alt="user profile picture">
+                        <img src="assets/img/user-propic-default-1.svg" alt="user profile picture">
                     </div>
                     <h2>Newsboard panel</h2>
                     <nav>
                         <ul class="list-unstyled">
-                            <li><a href="#" class="list-link">Write new article</a></li>
-                            <li><a href="#" class="list-link">Marked articles</a></li>
-                            <li><a href="#" class="list-link">Created articles</a></li>
-                            <li><a href="#" class="list-link">Review articles</a></li>
+                            <li><a href="article-editor.jsp" class="list-link">Write new article</a></li>
+                            <li><a href="Newsboard" class="list-link">Marked articles</a></li>
+                            <li><a href="CreatedArticles" class="list-link">Created articles</a></li>
+                            <li><a href="ReviewArticles" class="list-link">Review articles</a></li>
                         </ul>
                     </nav>
                 </div>
@@ -49,7 +59,22 @@
                     <!-- Newsboard content -->
                     <div class="newsboard-content">
                         <ul class="list-unstyled">
-                            <h2>Created news</h2>
+                            <h2>Created articles</h2>
+                            <%
+                                for(Article article : articles){
+                                    String badge = "";
+                                    switch(article.getArticleState()){
+                                        case 'p':
+                                            badge = "<span class=\"badge badge-success\">Published</span>";
+                                            break;
+                                        case 'u':
+                                            badge = "<span class=\"badge badge-warning\">Unreviewed</span>";
+                                            break;
+                                        case 'r':
+                                            badge = "<span class=\"badge badge-danger\">Rejected</span>";
+                                            break;
+                                    }
+                            %>
                             <li>
                                 <div class="article-card bg-dark-secondary">
                                     <div class="media">
@@ -57,70 +82,24 @@
                                             <img class="mr-3" src="assets/img/stock (1).jpg" alt="Article image">
                                         </div>
                                         <div class="media-body">
-                                        <h5 class="mt-0">Sample Article <span class="badge badge-success">Published</span></h5>
-                                            <p style="margin: 0; font-size: 0.75em;">Author: Bryan Duarte | Date: 10/17/2020
-                                            </p>
-                                            Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante
-                                            sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra
-                                            turpis...
-                                            <a href="#" class="site-text-link">Read more</a>
+                                        <h5 class="mt-0"><%= article.getTitle() %> <%= badge %></h5>
+                                            <p style="margin: 0; font-size: 0.75em;">Author: <%= article.getAuthorName() %> | Date: <%= article.getArticleDate() %></p>
+                                            <%= article.getDescription() %>
+                                            <a href="ArticleVisor?articleID=<%= article.getId() %>" class="site-text-link">Read more</a>
                                         </div>
                                     </div>
                                     <div class="mt-2 d-flex justify-content-end">
-                                        <a href="#" class="btn site-btn-primary ml-1">Read</a>
+                                        <a href="ArticleVisor?articleID=<%= article.getId() %>" class="btn site-btn-primary ml-1">Read</a>
                                         <a href="#" class="btn site-btn-primary ml-1">Edit</a>
                                         <a href="#" class="btn site-btn-primary ml-1">Delete</a>
                                     </div>
                                 </div>
                             </li>
-                            <li>
-                                <div class="article-card bg-dark-secondary">
-                                    <div class="media">
-                                        <div class="align-self-center article-card-img">
-                                            <img class="mr-3" src="assets/img/stock (2).jpg" alt="Article image">
-                                        </div>
-                                        <div class="media-body">
-                                        <h5 class="mt-0">Sample Article <span class="badge badge-warning">Unreviewed</span></h5>
-                                            <p style="margin: 0; font-size: 0.75em;">Author: Bryan Duarte | Date: 10/17/2020
-                                            </p>
-                                            Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante
-                                            sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra
-                                            turpis...
-                                            <a href="#" class="site-text-link">Read more</a>
-                                        </div>
-                                    </div>
-                                    <div class="mt-2 d-flex justify-content-end">
-                                        <a href="#" class="btn site-btn-primary ml-1">Read</a>
-                                        <a href="#" class="btn site-btn-primary ml-1">Edit</a>
-                                        <a href="#" class="btn site-btn-primary ml-1">Delete</a>
-                                    </div>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="article-card bg-dark-secondary">
-                                    <div class="media">
-                                        <div class="align-self-center article-card-img">
-                                            <img class="mr-3" src="assets/img/stock (3).jpg" alt="Article image">
-                                        </div>
-                                        <div class="media-body">
-                                        <h5 class="mt-0">Sample Article <span class="badge badge-danger">Rejected</span></h5>
-                                            <p style="margin: 0; font-size: 0.75em;">Author: Bryan Duarte | Date: 10/17/2020
-                                            </p>
-                                            Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante
-                                            sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra
-                                            turpis...
-                                            <a href="#" class="site-text-link">Read more</a>
-                                        </div>
-                                    </div>
-                                    <div class="mt-2 d-flex justify-content-end">
-                                        <a href="#" class="btn site-btn-primary ml-1">Read</a>
-                                        <a href="#" class="btn site-btn-primary ml-1">Edit</a>
-                                        <a href="#" class="btn site-btn-primary ml-1">Delete</a>
-                                    </div>
-                                </div>
-                            </li>
+                            <%
+                                }
+                            %>
                         </ul>
-                        <nav aria-label="User's articles">
+                        <nav aria-label="User's articles" style="display:none;">
                             <ul class="pagination justify-content-center">
                                 <li class="page-item site-page-item disabled"><a class="page-link" href="#">Previous</a>
                                 </li>

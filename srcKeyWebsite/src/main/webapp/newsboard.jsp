@@ -4,7 +4,17 @@
     Author     : delli
 --%>
 
+<%@page import="models.Article"%>
+<%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
+<%
+    ArrayList<Article> markedArticles = (ArrayList<Article>)request.getAttribute("markedArticles");
+    if(markedArticles == null){
+        markedArticles = new ArrayList<Article>();
+    }
+%>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -25,7 +35,7 @@
 </head>
 
 <body>
-    <jsp:include page="header.jsp"/>
+    <jsp:include page="navbar.jsp"/>
     <div class="page-container page-background bg-dark-page"">
         <div class=" page-content mx-auto py-4 bg-white">
         <div class="container">
@@ -33,15 +43,15 @@
                 <!-- Newsboard panel -->
                 <div class="col-2 newsboard-panel bg-dark-secondary">
                     <div class="user-profile-pic">
-                        <img src="/assets/img/user-propic-default-1.svg" alt="user profile picture">
+                        <img src="assets/img/user-propic-default-1.svg" alt="user profile picture">
                     </div>
                     <h2>Newsboard panel</h2>
                     <nav>
                         <ul class="list-unstyled">
-                            <li><a href="#" class="list-link">Write new article</a></li>
-                            <li><a href="#" class="list-link">Marked articles</a></li>
-                            <li><a href="#" class="list-link">Created articles</a></li>
-                            <li><a href="#" class="list-link">Review articles</a></li>
+                            <li><a href="article-editor.jsp" class="list-link">Write new article</a></li>
+                            <li><a href="Newsboard" class="list-link">Marked articles</a></li>
+                            <li><a href="CreatedArticles" class="list-link">Created articles</a></li>
+                            <li><a href="ReviewArticles" class="list-link">Review articles</a></li>
                         </ul>
                     </nav>
                 </div>
@@ -49,57 +59,29 @@
                     <!-- Newsboard content -->
                     <div class="newsboard-content">
                         <ul class="list-unstyled">
-                            <h2>Marked news</h2>
+                            <h2>Marked articles</h2>
+                            <%
+                                for(Article article : markedArticles){
+                            %>
                             <li>
                                 <div class="media article-card bg-dark-secondary">
                                     <div class="align-self-center article-card-img">
                                         <img class="mr-3" src="assets/img/stock (1).jpg" alt="Article image">
                                     </div>
                                     <div class="media-body">
-                                        <h5 class="mt-0">Sample Article</h5>
-                                        <p style="margin: 0; font-size: 0.75em;">Author: Bryan Duarte | Date: 10/17/2020
+                                        <h5 class="mt-0"><%= article.getTitle() %></h5>
+                                        <p style="margin: 0; font-size: 0.75em;">Author: <%= article.getAuthorName() %> | Date: <%= article.getArticleDate() %>
                                         </p>
-                                        Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante
-                                        sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra
-                                        turpis...
-                                        <a href="#" class="site-text-link">Read more</a>
+                                        <%= article.getDescription() %>
+                                        <a href="ArticleVisor?articleID=<%= article.getId() %>" class="site-text-link">Read more</a>
                                     </div>
                                 </div>
                             </li>
-                            <li>
-                                <div class="media article-card bg-dark-secondary">
-                                    <div class="align-self-center article-card-img">
-                                        <img class="mr-3" src="assets/img/stock (2).jpg" alt="Article image">
-                                    </div>
-                                    <div class="media-body">
-                                        <h5 class="mt-0">Sample Article</h5>
-                                        <p style="margin: 0; font-size: 0.75em;">Author: Bryan Duarte | Date: 10/17/2020
-                                        </p>
-                                        Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante
-                                        sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra
-                                        turpis...
-                                        <a href="#" class="site-text-link">Read more</a>
-                                    </div>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="media article-card bg-dark-secondary">
-                                    <div class="align-self-center article-card-img">
-                                        <img class="mr-3" src="assets/img/stock (3).jpg" alt="Article image">
-                                    </div>
-                                    <div class="media-body">
-                                        <h5 class="mt-0">Sample Article</h5>
-                                        <p style="margin: 0; font-size: 0.75em;">Author: Bryan Duarte | Date: 10/17/2020
-                                        </p>
-                                        Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante
-                                        sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra
-                                        turpis...
-                                        <a href="#" class="site-text-link">Read more</a>
-                                    </div>
-                                </div>
-                            </li>
+                            <%
+                                }
+                            %>
                         </ul>
-                        <nav aria-label="User's articles">
+                        <nav aria-label="User's articles" style="display:none">
                             <ul class="pagination justify-content-center">
                                 <li class="page-item site-page-item disabled"><a class="page-link" href="#">Previous</a>
                                 </li>

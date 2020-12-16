@@ -32,10 +32,10 @@
                         <a class="nav-link nav-hover" href="Home">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link nav-hover" href="#">Recent</a>
+                        <a class="nav-link nav-hover" href="Search?query=recent">Recent</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link nav-hover" href="#">Top</a>
+                        <a class="nav-link nav-hover" href="Search?query=top">Top</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link nav-hover" href="registration.jsp">Register</a>
@@ -44,8 +44,8 @@
                         <a class="nav-link nav-hover" href="#">About us</a>
                     </li>
                 </ul>
-                <form class="form-inline my-2 my-lg-0">
-                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                <form class="form-inline my-2 my-lg-0" action="Search" method="GET">
+                    <input class="form-control mr-sm-2" type="search" name="query" placeholder="Search" aria-label="Search">
                     <button class="btn site-btn-primary my-2 my-sm-0 material-icons"
                             type="submit">search</button>
                 </form>
@@ -117,8 +117,23 @@
                         </div>
                     </button>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="UserMenuButton">
-                        <a href="Profile?userId=<%=currentUser.getId()%>"><button class="btn site-btn-primary">Profile</button></a>
-                        <a href="LogOut"><button class="btn site-btn-primary">Log out</button></a>
+                        <ul class="list-unstyled">
+                            <li>
+                                <a href="Newsboard">
+                                    <button class="btn site-btn-primary">Newsboard</button>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="Profile?userId=<%=currentUser.getId()%>">
+                                    <button class="btn site-btn-primary my-1">Profile</button>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="LogOut">
+                                    <button class="btn site-btn-primary">Log out</button>
+                                </a>
+                            </li>
+                        </ul>
                     </div>
                 </div>
                 <%

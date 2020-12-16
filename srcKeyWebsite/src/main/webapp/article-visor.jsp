@@ -67,16 +67,19 @@
                     <div class="article-header">
                         <h1 id="articleTitle"><%= currentArticle.getTitle() %></h1>
                         <p id="articleAuthor"><%= currentArticle.getAuthorName() %></p>
-                        <p id="articleDate"><%= currentArticle.getArticleDate() %></p>
+                        <p id="articleDate"><%= currentArticle.getArticleDate()%></p>
                     </div>
                     <!-- Article body text -->
                     <div class="article-body">
                         <p>
-                            <%= currentArticle.getBody() %>
+                            <%= currentArticle.getBody()%>
                         </p>
                         <img class="article-image float-right" src="assets/img/stock (2).jpg" alt="people working with a computer">
                     </div>
                 </article>
+                <a href="MarkArticle?articleID=<%= currentArticle.getId()%>" class="btn btn-sm site-btn-primary">Mark as favorite</a>
+                <a href="#" class="btn btn-sm site-btn-primary ml-1 material-icons">thumb_up</a>
+                <a href="#" class="btn btn-sm site-btn-primary ml-1 material-icons">thumb_down</a>
             </div>
             <!-- Comment section -->
             <div class="row my-3">

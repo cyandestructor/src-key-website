@@ -259,7 +259,7 @@ AS
 		INNER JOIN ArticlesCategories AS AC ON AC.aID = A.aID
 		INNER JOIN Categories AS C ON C.ctgID = AC.ctgID
 	WHERE
-		@Query LIKE ('%' + C.ctgName + '%') OR @Query LIKE ('%' + A.title + '%')
+		(@Query LIKE ('%' + C.ctgName + '%') OR @Query LIKE ('%' + A.title + '%')) AND aState = 'p'
 	GROUP BY
 		A.aID) AS sub
 	INNER JOIN Articles AS A on A.aID = sub.aID;
@@ -525,6 +525,45 @@ AS
 		C.cParent = @CommentID;
 GO
 
+IF EXISTS (SELECT name FROM sysobjects WHERE name = 'AddMarkedArticle')
+	DROP PROCEDURE AddMarkedArticle;
+GO
+
+CREATE PROCEDURE AddMarkedArticle
+	@UserID		bigint,
+	@ArticleID	bigint
+AS
+	IF NOT EXISTS (SELECT maID FROM MarkedArticles WHERE userID = @UserID AND aID = @ArticleID)
+		BEGIN
+			INSERT INTO MarkedArticles (userID, aID) VALUES (@UserID, @ArticleID);
+		END
+GO
+
+IF EXISTS (SELECT name FROM sysobjects WHERE name = 'GetMarkedArticles')
+	DROP PROCEDURE GetMarkedArticles;
+GO
+
+CREATE PROCEDURE GetMarkedArticles
+	@UserID		bigint
+AS
+	SELECT
+		A.aID,
+		A.title,
+		A.aDate,
+		A.aDesc,
+		A.aBody,
+		A.author,
+		A.creationDate,
+		A.upVotes,
+		A.downVotes,
+		A.aState
+	FROM
+		MarkedArticles AS MA
+		INNER JOIN Articles AS A ON A.aID = MA.aID
+	WHERE
+		MA.userID = @UserID;
+GO
+
 IF EXISTS (SELECT name FROM sysobjects WHERE name = 'ProcedureE')
 	DROP PROCEDURE ProcedureE;
 GO
@@ -536,6 +575,7 @@ AS
 GO
 
 select * from users;
+select * from MarkedArticles;
 select * from Articles;
 select * from Multimedia;
 select * from UsersComments;

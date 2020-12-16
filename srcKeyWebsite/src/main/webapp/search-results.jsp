@@ -4,7 +4,18 @@
     Author     : delli
 --%>
 
+<%@page import="models.Article"%>
+<%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
+<%
+    String query = (String)request.getAttribute("query");
+    ArrayList<Article> results = (ArrayList<Article>)request.getAttribute("results");
+    if(results == null){
+        results = new ArrayList<Article>();
+    }
+%>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -30,57 +41,28 @@
             <div class="container">
                 <div class="row">
                     <div class="col-12">
-                        <h1 style="font-size: 2em;">Results of: search</h1>
+                        <h1 style="font-size: 2em;">Results of: <%= query %></h1>
                         <!-- Results list -->
                         <ul class="list-unstyled">
+                            <%
+                                for(Article article : results){
+                            %>
                             <li>
                                 <div class="media article-card bg-dark-secondary">
                                     <div class="align-self-center article-card-img">
                                         <img class="mr-3" src="assets/img/stock (1).jpg" alt="Article image">
                                     </div>
                                     <div class="media-body">
-                                        <h5 class="mt-0">Sample Article</h5>
-                                        <p style="margin: 0; font-size: 0.75em;">Author: Bryan Duarte | Date: 10/17/2020
-                                        </p>
-                                        Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante
-                                        sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra
-                                        turpis...
-                                        <a href="#" class="site-text-link">Read more</a>
+                                        <h5 class="mt-0"><%= article.getTitle() %></h5>
+                                        <p style="margin: 0; font-size: 0.75em;">Author: <%= article.getAuthorName() %> | Date: <%= article.getArticleDate() %></p>
+                                        <%= article.getDescription() %>
+                                        <a href="ArticleVisor?articleID=<%= article.getId() %>" class="site-text-link">Read more</a>
                                     </div>
                                 </div>
                             </li>
-                            <li>
-                                <div class="media article-card bg-dark-secondary">
-                                    <div class="align-self-center article-card-img">
-                                        <img class="mr-3" src="assets/img/stock (2).jpg" alt="Article image">
-                                    </div>
-                                    <div class="media-body">
-                                        <h5 class="mt-0">Sample Article</h5>
-                                        <p style="margin: 0; font-size: 0.75em;">Author: Bryan Duarte | Date: 10/17/2020
-                                        </p>
-                                        Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante
-                                        sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra
-                                        turpis...
-                                        <a href="#" class="site-text-link">Read more</a>
-                                    </div>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="media article-card bg-dark-secondary">
-                                    <div class="align-self-center article-card-img">
-                                        <img class="mr-3" src="assets/img/stock (3).jpg" alt="Article image">
-                                    </div>
-                                    <div class="media-body">
-                                        <h5 class="mt-0">Sample Article</h5>
-                                        <p style="margin: 0; font-size: 0.75em;">Author: Bryan Duarte | Date: 10/17/2020
-                                        </p>
-                                        Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante
-                                        sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra
-                                        turpis...
-                                        <a href="#" class="site-text-link">Read more</a>
-                                    </div>
-                                </div>
-                            </li>
+                            <%
+                                }
+                            %>
                         </ul>
                         <nav aria-label="User's articles">
                             <ul class="pagination justify-content-center">
