@@ -13,14 +13,13 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import models.User;
 
 /**
  *
  * @author delli
  */
-@WebServlet(name = "MarkArticle", urlPatterns = {"/MarkArticle"})
-public class MarkArticle extends HttpServlet {
+@WebServlet(name = "DeleteArticle", urlPatterns = {"/DeleteArticle"})
+public class DeleteArticle extends HttpServlet {
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -34,15 +33,7 @@ public class MarkArticle extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-   
-        User user = (User)request.getSession().getAttribute("user");
-        long articleID = Long.parseLong(request.getParameter("articleID"));
         
-        if(user != null){
-            ArticleDAO.MarkArticle(articleID,user.getId());
-        }
-        
-        response.sendRedirect("ArticleVisor?articleID=" + Long.toString(articleID));
     }
 
     /**
@@ -57,6 +48,11 @@ public class MarkArticle extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
+        long articleID = Long.parseLong(request.getParameter("articleID"));
+        
+        ArticleDAO.SetArticleState(articleID, 'd');
+        
+        response.sendRedirect("CreatedArticles");
     }
 
     /**

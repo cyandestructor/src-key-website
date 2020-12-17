@@ -74,7 +74,9 @@
                                 <div class="article-card bg-dark-secondary">
                                     <div class="media">
                                         <div class="align-self-center article-card-img">
-                                            <img class="mr-3" src="<%= article.getArticleMultimedia().get(0).getPath() %>" alt="Article image">
+                                            <% if(article.getArticleMultimedia().size() > 0){ %>
+                                            <img class="mr-3" src="/images/<%= article.getArticleMultimedia().get(0).getPath() %>" alt="Article image">
+                                            <% } %>
                                         </div>
                                         <div class="media-body">
                                             <h5 class="mt-0"><%= article.getTitle() %></h5>

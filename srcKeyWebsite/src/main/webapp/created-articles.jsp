@@ -79,7 +79,7 @@
                                 <div class="article-card bg-dark-secondary">
                                     <div class="media">
                                         <div class="align-self-center article-card-img">
-                                            <img class="mr-3" src="assets/img/stock (1).jpg" alt="Article image">
+                                            <img class="mr-3" src="/images/<%= article.getArticleMultimedia().get(0).getPath() %>" alt="Article image">
                                         </div>
                                         <div class="media-body">
                                         <h5 class="mt-0"><%= article.getTitle() %> <%= badge %></h5>
@@ -89,9 +89,15 @@
                                         </div>
                                     </div>
                                     <div class="mt-2 d-flex justify-content-end">
-                                        <a href="ArticleVisor?articleID=<%= article.getId() %>" class="btn site-btn-primary ml-1">Read</a>
-                                        <a href="#" class="btn site-btn-primary ml-1">Edit</a>
-                                        <a href="#" class="btn site-btn-primary ml-1">Delete</a>
+                                        <a href="ArticleVisor?articleID=<%= article.getId() %>" class="btn site-btn-primary">Read</a>
+                                        <form class="mx-1">
+                                            <input type="hidden" name="articleID" value="<%= article.getId() %>">
+                                            <button type="submit" class="btn site-btn-primary">Edit</button>
+                                        </form>
+                                        <form action="DeleteArticle" method="POST">
+                                            <input type="hidden" name="articleID" value="<%= article.getId() %>">
+                                            <button type="submit" class="btn site-btn-primary">Delete</button>
+                                        </form>
                                     </div>
                                 </div>
                             </li>

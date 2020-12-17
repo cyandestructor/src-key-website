@@ -5,6 +5,7 @@
  */
 package dao;
 
+import java.nio.file.Paths;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -36,9 +37,10 @@ public class MultimediaDAO {
                 long id = result.getLong(1);
                 char fType = result.getString(2).charAt(0);
                 String filepath = result.getString(3);
+                String filename = Paths.get(filepath).getFileName().toString();
                 Date uploadDate = result.getDate(4);
                 
-                Multimedia multimedia = new Multimedia(id, fType, filepath, uploadDate);
+                Multimedia multimedia = new Multimedia(id, fType, filename, uploadDate);
                 files.add(multimedia);
             }
             
@@ -73,9 +75,10 @@ public class MultimediaDAO {
                 long id = result.getLong(1);
                 char fType = result.getString(2).charAt(0);
                 String filepath = result.getString(3);
+                String filename = Paths.get(filepath).getFileName().toString();
                 Date uploadDate = result.getDate(4);
                 
-                Multimedia multimedia = new Multimedia(id, fType, filepath, uploadDate);
+                Multimedia multimedia = new Multimedia(id, fType, filename, uploadDate);
                 files.add(multimedia);
             }
             

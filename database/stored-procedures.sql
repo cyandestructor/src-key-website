@@ -308,7 +308,7 @@ AS
 			FROM
 				Articles
 			WHERE
-				author = @UserID;
+				author = @UserID AND aState <> 'd';
 		END
 GO
 
@@ -561,7 +561,7 @@ AS
 		MarkedArticles AS MA
 		INNER JOIN Articles AS A ON A.aID = MA.aID
 	WHERE
-		MA.userID = @UserID;
+		MA.userID = @UserID AND aState <> 'd';
 GO
 
 IF EXISTS (SELECT name FROM sysobjects WHERE name = 'ProcedureE')

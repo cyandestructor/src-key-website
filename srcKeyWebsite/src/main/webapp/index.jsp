@@ -10,8 +10,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <%
-    User currentUser = (User) session.getAttribute("user");
-    
     ArrayList<Article> recentArticles = (ArrayList<Article>) request.getAttribute("recentArticles");
     if(recentArticles == null){
         recentArticles = new ArrayList<Article>();
@@ -48,56 +46,54 @@
                         <div class="col-12 col-md-8">
                             <h2>Highlights</h2>
                             <div id="highlightsCarousel" class="carousel slide" data-ride="carousel">
-                                <%
-                                    for (int i = 0; i< topArticles.size(); i++) {
-                                %>
                                 <ol class="carousel-indicators">
                                     <%
-                                        if (i == 0) {
+                                        for (int i = 0; i< topArticles.size(); i++) {
+                                            if (i == 0) {
                                     %>
                                     <li data-target="#highlightsCarousel" data-slide-to="<%= i %>" class="active"></li>
                                     <%
-                                        }
-                                        else {
+                                            }
+                                            else {
                                     %>
                                     <li data-target="#highlightsCarousel" data-slide-to="<%= i %>"></li>
                                     <%
+                                            }
                                         }
                                     %>
                                 </ol>
                                 <div class="carousel-inner">
                                     <%
-                                        if (i == 0) {
+                                        for (int i = 0; i< topArticles.size(); i++) {
+                                            if (i == 0) {
                                     %>
-                                    <a href="ArticleVisor?articleID=<%= topArticles.get(i).getId() %>">
-                                        <div class="carousel-item active">
-                                        <img src="<%= topArticles.get(i).getArticleMultimedia().get(0).getPath() %>" class="d-block w-100" alt="...">
-                                        <div class="carousel-caption d-none d-md-block">
-                                            <h5><%= topArticles.get(i).getTitle() %></h5>
-                                            <p><%= topArticles.get(i).getDescription() %>.</p>
-                                        </div>
+                                    <div class="carousel-item active">
+                                        <a href="ArticleVisor?articleID=<%= topArticles.get(i).getId() %>">
+                                            <img src="/images/<%= topArticles.get(i).getArticleMultimedia().get(0).getPath() %>" class="d-block w-100" alt="...">
+                                            <div class="carousel-caption d-none d-md-block">
+                                                <h5><%= topArticles.get(i).getTitle() %></h5>
+                                                <p><%= topArticles.get(i).getDescription() %></p>
+                                            </div>
+                                        </a>
                                     </div>
-                                    </a>
                                     <%
-                                        }
-                                        else {
+                                            }
+                                            else {
                                     %>
-                                    <a href="ArticleVisor?articleID=<%= topArticles.get(i).getId() %>">
-                                        <div class="carousel-item">
-                                        <img src="<%= topArticles.get(i).getArticleMultimedia().get(0).getPath() %>" class="d-block w-100" alt="...">
-                                        <div class="carousel-caption d-none d-md-block">
-                                            <h5><%= topArticles.get(i).getTitle() %></h5>
-                                            <p><%= topArticles.get(i).getDescription() %>.</p>
-                                        </div>
-                                        </div>
-                                    </a>
+                                    <div class="carousel-item">
+                                        <a href="ArticleVisor?articleID=<%= topArticles.get(i).getId() %>">
+                                            <img src="/images/<%= topArticles.get(i).getArticleMultimedia().get(0).getPath() %>" class="d-block w-100" alt="...">
+                                            <div class="carousel-caption d-none d-md-block">
+                                                <h5><%= topArticles.get(i).getTitle() %></h5>
+                                                <p><%= topArticles.get(i).getDescription() %></p>
+                                            </div>
+                                        </a>
+                                    </div>
                                     <%
+                                            }
                                         }
                                     %>
                                 </div>
-                                <%
-                                    }
-                                %>
                                 <a class="carousel-control-prev" href="#highlightsCarousel" role="button" data-slide="prev">
                                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                                     <span class="sr-only">Previous</span>
@@ -116,14 +112,15 @@
                                         for (Article article : recentArticles){
                                     %>
                                     <li>
-                                        <a href="ArticleVisor?articleID=<%= article.getId()%>">
-                                            <div class="card" style="width: 18rem;">
-                                                <img src="<%= article.getArticleMultimedia().get(0).getPath()%>" class="card-img-top" alt="...">
-                                                <div class="card-body">
-                                                    <p class="card-text"><%= article.getDescription()%></p>
-                                                </div>
+                                        <div class="card" style="width: 18rem;">
+                                            <a href="ArticleVisor?articleID=<%= article.getId()%>">
+                                                <img src="/images/<%= article.getArticleMultimedia().get(0).getPath()%>" class="card-img-top" alt="...">
+                                            </a>
+                                            <div class="card-body">
+                                                <h5><%= article.getTitle()%></h5>
+                                                <p class="card-text"><%= article.getDescription()%></p>
                                             </div>
-                                        </a>
+                                        </div>
                                     </li>
                                     <%
                                         }

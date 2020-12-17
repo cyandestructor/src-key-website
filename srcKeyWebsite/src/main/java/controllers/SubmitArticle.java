@@ -9,7 +9,9 @@ import dao.ArticleDAO;
 import dao.CategoryDAO;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
+import java.nio.file.Files;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -59,11 +61,9 @@ public class SubmitArticle extends HttpServlet {
             throws ServletException, IOException {
         
         Part file = request.getPart("images");
-
-        String path = request.getServletContext().getRealPath("");
-        File fileSaveDir = new File(path + utility.FileUtils.RUTE_USER_IMAGE);
+        File fileSaveDir = new File(utility.FileUtils.RUTE_USER_IMAGE);
         if (!fileSaveDir.exists()) {
-            fileSaveDir.mkdir();
+            fileSaveDir.mkdirs();
         }
         
         String contentType;
@@ -73,7 +73,8 @@ public class SubmitArticle extends HttpServlet {
         if(file != null){
             contentType = file.getContentType();
             nameImage = file.getName() + System.currentTimeMillis() + utility.FileUtils.GetExtension(contentType);
-            fullPath = path + utility.FileUtils.RUTE_USER_IMAGE + "/" + nameImage;
+            File imageFile = new File(fileSaveDir, nameImage);
+            fullPath = imageFile.toPath().toString();
             file.write(fullPath);
         }
         
@@ -90,17 +91,18 @@ public class SubmitArticle extends HttpServlet {
             int articleID = ArticleDAO.SubmitArticle(article);
             if(articleID >= 0){
                 String categoriesString = request.getParameter("categories");
-                String[] categoryList = categoriesString.trim().split(",");
+                String[] categoryList = categoriesString.trim().split("\\s*,\\s*");
                 for(String category : categoryList){
                     long ctgID = CategoryDAO.RegisterCategory(new Category(category));
                     if(ctgID > 0){
                         ArticleDAO.SetArticleCategory(articleID, ctgID);
                     }
                 }
-                if (fullPath != "") {
+                if (!fullPath.equals("")) {
                     ArticleDAO.SetArticleMultimedia(articleID, fullPath, 'i');
                 }
                 response.sendRedirect("article-editor.jsp"); // CHECK THIS
+                return;
             }
             
         }

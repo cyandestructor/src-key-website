@@ -66,7 +66,7 @@
                             <li>
                                 <div class="media article-card bg-dark-secondary">
                                     <div class="align-self-center article-card-img">
-                                        <img class="mr-3" src="assets/img/stock (1).jpg" alt="Article image">
+                                        <img class="mr-3" src="/images/<%= article.getArticleMultimedia().get(0).getPath() %>" alt="Article image">
                                     </div>
                                     <div class="media-body">
                                         <h5 class="mt-0"><%= article.getTitle() %></h5>

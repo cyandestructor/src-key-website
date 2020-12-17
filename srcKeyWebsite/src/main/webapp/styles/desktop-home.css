@@ -21,7 +21,7 @@ tomato
     border-radius: 20px;
 }
 .page-background{
-    background-image: url("assets/img/src-key-logo-bg.svg");
+    background-image: url(../assets/img/src-key-logo-bg.svg);
     background-size: 50px;
 }
 .page-container{

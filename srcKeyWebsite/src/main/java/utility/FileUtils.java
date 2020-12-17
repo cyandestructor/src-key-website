@@ -10,7 +10,7 @@ package utility;
  * @author delli
  */
 public class FileUtils {
-    public static String RUTE_USER_IMAGE = "assets/images";
+    public static String RUTE_USER_IMAGE = "C:/assets/images";
     
     public static String GetExtension(String contentType) {
         switch (contentType) {
