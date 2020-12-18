@@ -50,7 +50,8 @@ CREATE TABLE Comments (
 	upVotes		bigint default 0,
 	downVotes	bigint default 0,
 
-	cParent		bigint
+	cParent		bigint,
+	active bit default 1,
 
 	CONSTRAINT PK_COMMENT PRIMARY KEY (cID),
 
@@ -81,9 +82,10 @@ CREATE TABLE Multimedia (
 
 CREATE TABLE UsersComments (
 	ucID		bigint not null identity,
-	userID		bigint not null,
+	userID		bigint,
 	aID			bigint not null,
-	cID			bigint not null
+	cID			bigint not null,
+	altUsername	varchar(30),
 
 	CONSTRAINT PK_USERS_COMMENTS PRIMARY KEY (ucID),
 

@@ -21,15 +21,17 @@ public class Comment {
     private long userId;
     private String posterUsername;
     
+    private Comment parentComment;
     private ArrayList<Comment> childrenComments;
 
-    public Comment(long id, String commentText, long upVotes, long downVotes, long userId, String posterUsername) {
+    public Comment(long id, String commentText, long upVotes, long downVotes, long userId, String posterUsername, long parent) {
         this.id = id;
         this.commentText = commentText;
         this.upVotes = upVotes;
         this.downVotes = downVotes;
         this.userId = userId;
         this.posterUsername = posterUsername;
+        this.parentID = parent;
     }
 
     public Comment(String commentText) {
@@ -42,6 +44,14 @@ public class Comment {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public Comment getParentComment() {
+        return parentComment;
+    }
+
+    public void setParentComment(Comment parentComment) {
+        this.parentComment = parentComment;
     }
 
     public ArrayList<Comment> getChildrenComments() {

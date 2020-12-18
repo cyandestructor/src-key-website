@@ -96,22 +96,51 @@
                         <%
                             for (Comment comment : articleComments){
                         %>
-                            <li class="comment-card bg-dark-secondary">
+                        <li class="comment-card bg-dark-secondary mb-1" id="comment<%= comment.getId() %>">
                             <div class="media">
                                 <div class="comment-card-img mr-2">
                                     <img src="assets/img/stock (2).jpg" alt="user profile pic">
                                 </div>
                                 <div class="media-body">
-                                <h5 class="mt-0"><%= comment.getPosterUsername() %></h5>
+                                    <p class="mt-0" style="font-size: 1.25em;">
+                                        <a href="Profile?userId=<%= comment.getUserId()%>" class="site-text-link">
+                                            <%= comment.getPosterUsername()%>
+                                        </a>
+                                    </p>
                                     <!--<p style="margin: 0; font-size: 0.75em;">10/17/2020 14:23</p>-->
+                                    <%
+                                        if(comment.getParentID()!=0){
+                                            Comment parent = comment.getParentComment();
+                                    %>
+                                    <div class="border p-1 mb-2">
+                                        <a href="#comment<%= parent.getId()%>" class="site-text-link">
+                                            @<%= parent.getPosterUsername()%>
+                                        </a>
+                                        <p style="margin: 0; font-size: 0.75em;"><%= parent.getCommentText()%></p>
+                                    </div>
+                                    <%
+                                        }
+                                    %>
                                     <%= comment.getCommentText() %>
                                 </div>
                             </div>
-                            <div class="mt-2 d-flex justify-content-end">
-                                <a href="#" class="btn btn-sm site-btn-primary">Respond</a>
+                            <div class="mt-2 d-flex justify-content-end dropdown">
+                                <button class="btn btn-sm site-btn-primary dropdown-toggle" type="button" id="commentRespondButton<%= comment.getId() %>" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Respond
+                                </button>
                                 <a href="#" class="btn btn-sm site-btn-primary ml-1 material-icons">thumb_up</a>
                                 <a href="#" class="btn btn-sm site-btn-primary ml-1 material-icons">thumb_down</a>
                                 <a href="#" class="btn btn-sm site-btn-primary ml-1 material-icons">report</a>
+                                <div class="dropdown-menu" aria-labelledby="commentRespondButton<%= comment.getId()%>">
+                                    <form action="RespondComment" method="POST" class="p-1">
+                                        <div class="form-group mx-1">
+                                            <input type="hidden" name="articleID" value="<%= currentArticle.getId() %>">
+                                            <input type="hidden" name="parentID" value="<%= comment.getId() %>">
+                                            <input type="text" name="commentBody" class="form-control" placeholder="What do you think?">
+                                        </div>
+                                        <button type="submit" class="btn btn-sm site-btn-primary">Submit</button>
+                                    </form>
+                                </div>
                             </div>
                         </li>
                         <%

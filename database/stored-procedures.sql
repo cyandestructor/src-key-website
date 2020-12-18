@@ -54,6 +54,11 @@ AS
 		Users
 	WHERE
 		username = @Username AND uPassword = @Password;
+
+	UPDATE
+		Users
+		SET lastConnection = GETDATE()
+		WHERE username = @Username AND uPassword = @Password;
 GO
 
 IF EXISTS (SELECT name FROM sysobjects WHERE name = 'GetUser')
@@ -95,6 +100,19 @@ AS
 		Users
 	WHERE
 		userID = @UserId;
+GO
+
+IF EXISTS (SELECT name FROM sysobjects WHERE name = 'SetUserDescription')
+	DROP PROCEDURE SetUserDescription;
+GO
+
+CREATE PROCEDURE SetUserDescription
+	@UserID			bigint,
+	@Description	nvarchar(255)
+AS
+	UPDATE Users
+		SET uDescription = @Description
+		WHERE userID = @UserID;
 GO
 
 IF EXISTS (SELECT name FROM sysobjects WHERE name = 'SubmitArticle')
@@ -493,14 +511,38 @@ AS
 		C.cText,
 		C.upVotes,
 		C.downVotes,
-		U.userID,
-		U.username
+		ISNULL(U.userID, 0) AS userID,
+		ISNULL(U.username, UC.altUsername) AS username,
+		ISNULL(C.cParent, 0) AS parent
 	FROM
 		Comments AS C
 		INNER JOIN UsersComments AS UC ON UC.cID = C.cID
-		LEFT JOIN Users AS U ON U.userID = UC.ucID
+		LEFT JOIN Users AS U ON U.userID = UC.userID
 	WHERE
-		UC.aID = @ArticleID;
+		UC.aID = @ArticleID AND active = 1;
+GO
+
+IF EXISTS (SELECT name FROM sysobjects WHERE name = 'GetComment')
+	DROP PROCEDURE GetComment;
+GO
+
+CREATE PROCEDURE GetComment
+	@CommentID	bigint
+AS
+	SELECT
+		C.cID,
+		C.cText,
+		C.upVotes,
+		C.downVotes,
+		ISNULL(U.userID, 0) AS userID,
+		ISNULL(U.username, UC.altUsername) AS username,
+		ISNULL(C.cParent, 0) AS parent
+	FROM
+		Comments AS C
+		INNER JOIN UsersComments AS UC ON UC.cID = C.cID
+		LEFT JOIN Users AS U ON U.userID = UC.userID
+	WHERE
+		C.cID = @CommentID;
 GO
 
 IF EXISTS (SELECT name FROM sysobjects WHERE name = 'GetChildrenComments')
@@ -562,6 +604,52 @@ AS
 		INNER JOIN Articles AS A ON A.aID = MA.aID
 	WHERE
 		MA.userID = @UserID AND aState <> 'd';
+GO
+
+IF EXISTS (SELECT name FROM sysobjects WHERE name = 'VoteArticle')
+	DROP PROCEDURE VoteArticle;
+GO
+
+CREATE PROCEDURE VoteArticle
+	@ArticleID		bigint,
+	@Upvote			bit,
+	@Downvote		bit
+AS
+	IF @Upvote = 1
+		BEGIN
+			UPDATE Articles
+				SET upVotes = upVotes + 1
+				WHERE aID = @ArticleID;
+		END
+	ELSE IF @Downvote = 1
+		BEGIN
+			UPDATE Articles
+				SET downVotes = downVotes + 1
+				WHERE aID = @ArticleID;
+		END
+GO
+
+IF EXISTS (SELECT name FROM sysobjects WHERE name = 'VoteComment')
+	DROP PROCEDURE VoteComment;
+GO
+
+CREATE PROCEDURE VoteComment
+	@CommentID		bigint,
+	@Upvote			bit,
+	@Downvote		bit
+AS
+	IF @Upvote = 1
+		BEGIN
+			UPDATE Comments
+				SET upvotes = upvotes + 1
+				WHERE cID = @CommentID;
+		END
+	ELSE IF @Downvote = 1
+		BEGIN
+			UPDATE Comments
+				SET downVotes = downVotes + 1
+				WHERE cID = @CommentID;
+		END
 GO
 
 IF EXISTS (SELECT name FROM sysobjects WHERE name = 'ProcedureE')

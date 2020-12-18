@@ -25,10 +25,13 @@
                                     <a href="Home" class="list-link">Home</a>
                                 </li>
                                 <li>
-                                    <a href="#" class="list-link">Recent</a>
+                                    <a href="Search?query=recent" class="list-link">Recent</a>
                                 </li>
                                 <li>
-                                    <a href="#" class="list-link">Top</a>
+                                    <a href="Search?query=top" class="list-link">Top</a>
+                                </li>
+                                <li>
+                                    <a href="registration.jsp" class="list-link">Register</a>
                                 </li>
                                 <li>
                                     <a href="#" class="list-link">About us</a>

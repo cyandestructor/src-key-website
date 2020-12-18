@@ -117,7 +117,7 @@
                         </div>
                     </button>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="UserMenuButton">
-                        <ul class="list-unstyled">
+                        <ul class="list-unstyled p-1">
                             <li>
                                 <a href="Newsboard">
                                     <button class="btn site-btn-primary">Newsboard</button>

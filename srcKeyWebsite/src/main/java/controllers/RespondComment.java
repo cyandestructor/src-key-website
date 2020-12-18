@@ -5,19 +5,15 @@
  */
 package controllers;
 
-import dao.ArticleDAO;
 import dao.CommentDAO;
-import dao.MultimediaDAO;
-import dao.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import models.Article;
+import javax.servlet.http.HttpSession;
 import models.Comment;
 import models.User;
 
@@ -25,8 +21,8 @@ import models.User;
  *
  * @author delli
  */
-@WebServlet(name = "ArticleVisor", urlPatterns = {"/ArticleVisor"})
-public class ArticleVisor extends HttpServlet {
+@WebServlet(name = "RespondComment", urlPatterns = {"/RespondComment"})
+public class RespondComment extends HttpServlet {
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -41,27 +37,6 @@ public class ArticleVisor extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        long articleID = Long.parseLong(request.getParameter("articleID"));
-        Article article = ArticleDAO.GetArticleByID(articleID);
-        article.setArticleMultimedia(MultimediaDAO.GetArticleMultimeda(articleID));
-        article.setAuthorName(UserDAO.GetUserFullName(article.getAuthor()));
-        
-        User author = UserDAO.GetUserByID(article.getAuthor());
-        
-        ArrayList<Comment> articleComments = CommentDAO.GetArticleComments(articleID);
-        
-        for(Comment comment : articleComments){
-            if(comment.getParentID() != 0){
-                comment.setParentComment(CommentDAO.GetComment(comment.getParentID()));
-            }
-        }
-        
-        request.setAttribute("articleComments", articleComments);
-        
-        request.setAttribute("article", article);
-        request.setAttribute("author", author);
-        
-        request.getRequestDispatcher("article-visor.jsp").forward(request, response);
     }
 
     /**
@@ -76,6 +51,19 @@ public class ArticleVisor extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
+        HttpSession session = request.getSession();
+        User currentUser = (User)session.getAttribute("user");
+        
+        Long articleID = Long.parseLong(request.getParameter("articleID"));
+        Long parentID = Long.parseLong(request.getParameter("parentID"));
+        String bodyText = request.getParameter("commentBody");
+        
+        if(currentUser != null){
+            Comment comment = new Comment(bodyText);
+            CommentDAO.CreateComment(comment, articleID, currentUser.getId(), parentID);
+        }
+        
+        response.sendRedirect("ArticleVisor?articleID=" + articleID.toString());
     }
 
     /**

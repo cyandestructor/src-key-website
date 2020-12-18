@@ -47,7 +47,7 @@ public class CommentDAO {
         Connection con = null;
         try {
             con = DbConnection.getConnection();
-            CallableStatement statement = con.prepareCall("call CreateComment(?,?,?)");
+            CallableStatement statement = con.prepareCall("call CreateComment(?,?,?,?)");
             statement.setLong(1, articleID);
             statement.setLong(2, userID);
             statement.setString(3, comment.getCommentText());
@@ -85,8 +85,9 @@ public class CommentDAO {
                 long downVotes = result.getLong(4);
                 long userID = result.getLong(5);
                 String username = result.getString(6);
+                long parentID = result.getLong(7);
                 
-                Comment comment = new Comment(commentID, commentBody, upVotes, downVotes, userID, username);
+                Comment comment = new Comment(commentID, commentBody, upVotes, downVotes, userID, username, parentID);
                 
                 comments.add(comment);
             }
@@ -124,7 +125,7 @@ public class CommentDAO {
                 long userID = result.getLong(5);
                 String username = result.getString(6);
                 
-                Comment comment = new Comment(commentID, commentBody, upVotes, downVotes, userID, username);
+                Comment comment = new Comment(commentID, commentBody, upVotes, downVotes, userID, username, parentID);
                 
                 comments.add(comment);
             }
@@ -141,6 +142,41 @@ public class CommentDAO {
             }
         }
         return comments;
+    }
+    
+    public static Comment GetComment(long commentID){
+        
+        Connection con = null;
+        try {
+            con = DbConnection.getConnection();
+            CallableStatement statement = con.prepareCall("call GetComment(?)");
+            statement.setLong(1, commentID);
+            
+            ResultSet result = statement.executeQuery();
+            
+            while(result.next()){
+                String commentBody = result.getString(2);
+                long upVotes = result.getLong(3);
+                long downVotes = result.getLong(4);
+                long userID = result.getLong(5);
+                String username = result.getString(6);
+                long parentID = result.getLong(7);
+                
+                return new Comment(commentID, commentBody, upVotes, downVotes, userID, username, parentID);
+            }
+            
+        } catch (java.sql.SQLException ex) {
+            System.out.println(ex.getMessage());
+        } finally {
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(CommentDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+        return null;
     }
     
 }
