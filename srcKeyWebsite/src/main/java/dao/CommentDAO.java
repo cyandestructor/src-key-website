@@ -67,6 +67,30 @@ public class CommentDAO {
         return 0;
     }
     
+    public static int VoteComment(long commentID, boolean upVote){
+        Connection con = null;
+        try {
+            con = DbConnection.getConnection();
+            CallableStatement statement = con.prepareCall("call VoteComment(?,?,?)");
+            statement.setLong(1, commentID);
+            statement.setBoolean(2, upVote);
+            statement.setBoolean(3, !upVote);
+            
+            return statement.executeUpdate();
+        } catch (java.sql.SQLException ex) {
+            System.out.println(ex.getMessage());
+        } finally {
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(CommentDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+        return 0;
+    }
+    
     static public ArrayList<Comment> GetArticleComments(long articleID){
         
         ArrayList<Comment> comments = new ArrayList<Comment>();

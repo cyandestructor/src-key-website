@@ -77,9 +77,11 @@
                         <img class="article-image float-right" src="assets/img/stock (2).jpg" alt="people working with a computer">
                     </div>
                 </article>
-                <a href="MarkArticle?articleID=<%= currentArticle.getId()%>" class="btn btn-sm site-btn-primary">Mark as favorite</a>
-                <a href="#" class="btn btn-sm site-btn-primary ml-1 material-icons">thumb_up</a>
-                <a href="#" class="btn btn-sm site-btn-primary ml-1 material-icons">thumb_down</a>
+                <div class="col-12">
+                    <a href="MarkArticle?articleID=<%= currentArticle.getId()%>" class="btn btn-sm site-btn-primary">Mark as favorite</a>
+                    <a href="VoteArticle?articleID=<%= currentArticle.getId()%>&vote=true" class="btn btn-sm site-btn-primary ml-1 material-icons">thumb_up</a>
+                    <a href="VoteArticle?articleID=<%= currentArticle.getId()%>&vote=false" class="btn btn-sm site-btn-primary ml-1 material-icons">thumb_down</a>
+                </div>
             </div>
             <!-- Comment section -->
             <div class="row my-3">
@@ -126,10 +128,10 @@
                             </div>
                             <div class="mt-2 d-flex justify-content-end dropdown">
                                 <button class="btn btn-sm site-btn-primary dropdown-toggle" type="button" id="commentRespondButton<%= comment.getId() %>" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Respond
+                                    Reply
                                 </button>
-                                <a href="#" class="btn btn-sm site-btn-primary ml-1 material-icons">thumb_up</a>
-                                <a href="#" class="btn btn-sm site-btn-primary ml-1 material-icons">thumb_down</a>
+                                <span class="mx-1 my-auto"><%= comment.getUpVotes() %></span><a href="VoteComment?articleID=<%= currentArticle.getId() %>&commentID=<%= comment.getId() %>&vote=true" class="btn btn-sm site-btn-primary ml-1 material-icons">thumb_up</a>
+                                <a href="VoteComment?articleID=<%= currentArticle.getId() %>&commentID=<%= comment.getId() %>&vote=false" class="btn btn-sm site-btn-primary ml-1 material-icons">thumb_down</a>
                                 <a href="#" class="btn btn-sm site-btn-primary ml-1 material-icons">report</a>
                                 <div class="dropdown-menu" aria-labelledby="commentRespondButton<%= comment.getId()%>">
                                     <form action="RespondComment" method="POST" class="p-1">

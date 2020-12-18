@@ -54,6 +54,31 @@ public class ArticleDAO {
         return -1;
     }
     
+    public static int VoteArticle(long articleID, boolean upVote){
+        
+        Connection con = null;
+        try {
+            con = DbConnection.getConnection();
+            CallableStatement statement = con.prepareCall("call VoteArticle(?,?,?)");
+            statement.setLong(1, articleID);
+            statement.setBoolean(2, upVote);
+            statement.setBoolean(3, !upVote);
+            
+            return statement.executeUpdate();
+        } catch (java.sql.SQLException ex) {
+            System.out.println(ex.getMessage());
+        } finally {
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(ArticleDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+        return 0;
+    }
+    
     public static int SetArticleCategory(long articleID, long categoryID){
         
         Connection con = null;
@@ -76,7 +101,6 @@ public class ArticleDAO {
             }
         }
         return 0;
-        
     }
     
     public static int SetArticleMultimedia(long articleID, String filepath, char fileType){
