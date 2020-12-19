@@ -26,6 +26,14 @@ public class User {
     private Date registrationDate;
     private Date lastConnection;
 
+    public User(long id, String email, String firstName, String lastName, String description) {
+        this.id = id;
+        this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.description = description;
+    }
+
     public User(long id, String username, String email, String firstName, String lastName, String description, String profilePic, int level, char userType, char accountState, Date registrationDate, Date lastConnection) {
         this.id = id;
         this.username = username;
@@ -40,8 +48,6 @@ public class User {
         this.registrationDate = registrationDate;
         this.lastConnection = lastConnection;
     }
-
-    
     
     public User(String username, String password, String email, String firstName, String lastName) {
         this.username = username;

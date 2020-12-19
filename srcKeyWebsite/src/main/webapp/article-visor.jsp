@@ -14,6 +14,12 @@
     Article currentArticle = (Article)request.getAttribute("article");
     User author = (User)request.getAttribute("author");
     
+    String userProfilePic = "assets/img/user-propic-default-1.png";
+    
+    if(author != null){
+        userProfilePic = author.getProfilePic().isBlank() ? userProfilePic : "/images/" + author.getProfilePic();
+    }
+    
     ArrayList<Comment> articleComments = (ArrayList<Comment>)request.getAttribute("articleComments");
     if (articleComments == null){
         articleComments = new ArrayList<Comment>();
@@ -56,7 +62,7 @@
                     <!-- Author card -->
                     <div class="float-left author-card mb-1 mr-3">
                         <div class="card" style="width: 15rem;">
-                            <img class="card-img-top" src="assets/img/stock (1).jpg" alt="Card image cap">
+                            <img class="card-img-top" src="<%= userProfilePic %>" alt="Author image">
                             <div class="card-body">
                               <h5 class="card-title">About the author</h5>
                               <p class="card-text"><%= author.getDescription().isBlank() ? "Nothing yet" : author.getDescription() %></p>
@@ -97,16 +103,19 @@
                     <ul class="list-unstyled mt-2">
                         <%
                             for (Comment comment : articleComments){
+                                String profilePic = comment.getPosterImg().isBlank() ? "assets/img/user-propic-default-1.png" : "/images/" + comment.getPosterImg();
+                                String posterUsername = comment.getPosterUsername();
+                                posterUsername += comment.getUserId() == author.getId() ? " &#9733;" : "";
                         %>
                         <li class="comment-card bg-dark-secondary mb-1" id="comment<%= comment.getId() %>">
                             <div class="media">
                                 <div class="comment-card-img mr-2">
-                                    <img src="assets/img/stock (2).jpg" alt="user profile pic">
+                                    <img src="<%= profilePic %>" alt="user profile pic">
                                 </div>
                                 <div class="media-body">
                                     <p class="mt-0" style="font-size: 1.25em;">
                                         <a href="Profile?userId=<%= comment.getUserId()%>" class="site-text-link">
-                                            <%= comment.getPosterUsername()%>
+                                            <%= posterUsername %>
                                         </a>
                                     </p>
                                     <!--<p style="margin: 0; font-size: 0.75em;">10/17/2020 14:23</p>-->

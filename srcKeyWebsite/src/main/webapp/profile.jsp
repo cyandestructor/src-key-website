@@ -11,6 +11,7 @@
 
 <%
     User user = (User)request.getAttribute("user");
+    User currentUser = (User)request.getSession().getAttribute("user");
     
     ArrayList<Article> userArticles = (ArrayList<Article>)request.getAttribute("userArticles");
     if (userArticles == null){
@@ -56,14 +57,14 @@
                         if(!user.getProfilePic().isBlank()){
                     %>
                     <div class="user-profile-pic">
-                        <img src="<%= user.getProfilePic() %>" alt="user profile picture">
+                        <img src="/images/<%= user.getProfilePic() %>" alt="user profile picture">
                     </div>
                     <%
                         }
                         else {
                     %>
                     <div class="user-profile-pic">
-                        <img src="assets/img/user-propic-default-1.svg" alt="user profile picture">
+                        <img src="assets/img/user-propic-default-1.png" alt="user profile picture">
                     </div>
                     <%
                         }
@@ -74,9 +75,18 @@
                     <span style="font-weight: bold;">Level: </span><span id="userLevel"><%= user.getLevel() %></span>
                     <span style="font-weight: bold;">Contributions: </span><span id="userContributions"><%= userArticles.size() %></span>
                     <div style="font-weight: bold;">About:</div>
-                    <p id="userDescription">
+                    <p id="userDescription" class="mb-2">
                         <%= user.getDescription().isBlank() ? "Nothing yet" : user.getDescription() %>
                     </p>
+                    <%
+                        if(currentUser != null){
+                            if(currentUser.getId() == user.getId()){
+                    %>
+                    <a href="ProfileEditor" class="btn btn-sm site-btn-primary">Edit profile</a>
+                    <%
+                            }
+                        }
+                    %>
                 </div>
                 <!-- Activity -->
                 <div class="col-12 col-md-9">

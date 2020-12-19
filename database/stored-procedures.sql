@@ -35,6 +35,27 @@ AS
 		ROLLBACK;
 GO
 
+IF EXISTS (SELECT name FROM sysobjects WHERE name = 'EditUser')
+	DROP PROCEDURE EditUser;
+GO
+
+CREATE PROCEDURE EditUser
+	@UserID			bigint,
+	@Firstname		nvarchar(50),
+	@Lastname		nvarchar(50),
+	@Email			nvarchar(50),
+	@Description	nvarchar(255)
+AS
+	UPDATE Users
+		SET
+			firstName = @Firstname,
+			lastname = @Lastname,
+			email = @Email,
+			uDescription = @Description
+		WHERE
+			userID = @UserID;
+GO
+
 IF EXISTS (SELECT name FROM sysobjects WHERE name = 'LogIn')
 	DROP PROCEDURE LogIn;
 GO
@@ -112,6 +133,19 @@ CREATE PROCEDURE SetUserDescription
 AS
 	UPDATE Users
 		SET uDescription = @Description
+		WHERE userID = @UserID;
+GO
+
+IF EXISTS (SELECT name FROM sysobjects WHERE name = 'SetUserProfilePic')
+	DROP PROCEDURE SetUserProfilePic;
+GO
+
+CREATE PROCEDURE SetUserProfilePic
+	@UserID			bigint,
+	@Filename		nvarchar(255)
+AS
+	UPDATE Users
+		SET profilePic = @Filename
 		WHERE userID = @UserID;
 GO
 

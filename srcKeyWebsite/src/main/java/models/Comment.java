@@ -20,6 +20,7 @@ public class Comment {
     
     private long userId;
     private String posterUsername;
+    private String posterImg;
     
     private Comment parentComment;
     private ArrayList<Comment> childrenComments;
@@ -68,6 +69,14 @@ public class Comment {
 
     public void setUserId(long userId) {
         this.userId = userId;
+    }
+
+    public String getPosterImg() {
+        return posterImg;
+    }
+
+    public void setPosterImg(String posterImg) {
+        this.posterImg = posterImg;
     }
 
     public String getPosterUsername() {

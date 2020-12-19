@@ -4,7 +4,6 @@
     object-fit: cover;
 }
 .user-profile-pic{
-    background-color: tomato;
     padding: 1em;
     width: 200px;
     height: 200px;
@@ -13,6 +12,9 @@
     margin: 0 auto 1em auto;
 }
 .user-profile-pic>img{
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
     object-fit: cover;
 }
 .user-info{

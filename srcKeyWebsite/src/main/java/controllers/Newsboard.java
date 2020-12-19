@@ -44,6 +44,9 @@ public class Newsboard extends HttpServlet {
         
         if (user != null){
             articles = ArticleDAO.GetMarkedArticles(user.getId());
+            
+            User userInfo = UserDAO.GetUserByID(user.getId());
+            request.setAttribute("currentUser", userInfo);
         }
         
         for (Article article : articles){

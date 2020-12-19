@@ -1,0 +1,15 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 18 dic 2020, 12:22:46
+    Author     : delli
+*/
+
+.profile-pic-btn{
+    width: 10em;
+    height: 10em;
+    border-radius: 50%;
+}

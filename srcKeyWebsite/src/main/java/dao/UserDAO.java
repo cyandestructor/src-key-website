@@ -45,6 +45,54 @@ public class UserDAO {
         return 0;
     }
     
+    public static int EditUser(User user){
+        Connection con = null;
+        try {
+            con = DbConnection.getConnection();
+            CallableStatement statement = con.prepareCall("call EditUser(?,?,?,?,?)");
+            statement.setLong(1, user.getId());
+            statement.setString(2, user.getFirstName());
+            statement.setString(3, user.getLastName());
+            statement.setString(4, user.getEmail());
+            statement.setString(5, user.getDescription());
+            return statement.executeUpdate();
+        } catch (java.sql.SQLException ex) {
+            System.out.println(ex.getMessage());
+        } finally {
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+        return 0;
+    }
+    
+    public static int SetUserProfilePic(long userID, String filename){
+        Connection con = null;
+        try {
+            con = DbConnection.getConnection();
+            CallableStatement statement = con.prepareCall("call SetUserProfilePic(?,?)");
+            statement.setLong(1, userID);
+            statement.setString(2, filename);
+            
+            return statement.executeUpdate();
+        } catch (java.sql.SQLException ex) {
+            System.out.println(ex.getMessage());
+        } finally {
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+        return 0;
+    }
+    
     public static String GetUserFullName(long userId){
         Connection con = null;
         try {
