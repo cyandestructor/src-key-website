@@ -93,6 +93,30 @@ public class UserDAO {
         return 0;
     }
     
+    public static int SuspendUser(long adminID, long userID, String description){
+        Connection con = null;
+        try {
+            con = DbConnection.getConnection();
+            CallableStatement statement = con.prepareCall("call SuspendAccount(?,?,?)");
+            statement.setLong(1, adminID);
+            statement.setLong(2, userID);
+            statement.setString(3, description);
+            
+            return statement.executeUpdate();
+        } catch (java.sql.SQLException ex) {
+            System.out.println(ex.getMessage());
+        } finally {
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+        return 0;
+    }
+    
     public static String GetUserFullName(long userId){
         Connection con = null;
         try {

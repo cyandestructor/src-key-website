@@ -310,13 +310,20 @@ AS
 		Articles AS A
 		INNER JOIN ArticlesCategories AS AC ON AC.aID = A.aID
 		INNER JOIN Categories AS C ON C.ctgID = AC.ctgID
+		INNER JOIN Users AS U ON U.userID = A.author
 	WHERE
-		(@Query LIKE ('%' + C.ctgName + '%') OR @Query LIKE ('%' + A.title + '%')) AND aState = 'p'
+		(@Query LIKE ('%' + C.ctgName + '%')
+		OR @Query LIKE ('%' + A.title + '%')
+		OR @Query LIKE ('%' + A.aDesc + '%')
+		OR @Query LIKE ('%' + U.firstName + ' ' +U.lastname + '%'))
+		AND aState = 'p'
 	GROUP BY
 		A.aID) AS sub
 	INNER JOIN Articles AS A on A.aID = sub.aID;
 		
 GO
+
+--EXEC SearchArticles @Query = 'query';
 
 IF EXISTS (SELECT name FROM sysobjects WHERE name = 'GetArticlesByUser')
 	DROP PROCEDURE GetArticlesByUser;
@@ -579,6 +586,51 @@ AS
 		C.cID = @CommentID;
 GO
 
+IF EXISTS (SELECT name FROM sysobjects WHERE name = 'DeleteComment')
+	DROP PROCEDURE DeleteComment;
+GO
+
+CREATE PROCEDURE DeleteComment
+	@CommentID		bigint
+AS
+	UPDATE Comments
+		SET
+			active = 0,
+			cText = 'This comment was deleted'
+		WHERE
+			cID = @CommentID;
+GO
+
+IF EXISTS (SELECT name FROM sysobjects WHERE name = 'SuspendAccount')
+	DROP PROCEDURE SuspendAccount;
+GO
+
+CREATE PROCEDURE SuspendAccount
+	@AdminAccount		bigint,
+	@UserAccount		bigint,
+	@Description		text
+AS
+	BEGIN TRAN
+
+	-- Create report
+	INSERT INTO Reports (userRq, userTg) VALUES (@AdminAccount, @UserAccount);
+
+	DECLARE @ReportID bigint = IDENT_CURRENT('Reports');
+
+	-- Create infraction
+	INSERT INTO Infractions (infDesc, report, rDate) VALUES (@Description, @ReportID, GETDATE());
+
+	-- Suspend user
+	UPDATE Users
+		SET accountState = 's'
+		WHERE userID = @UserAccount;
+
+	IF @@ERROR = 0
+		COMMIT;
+	ELSE
+		ROLLBACK;
+GO
+
 IF EXISTS (SELECT name FROM sysobjects WHERE name = 'GetChildrenComments')
 	DROP PROCEDURE GetChildrenComments;
 GO
@@ -704,4 +756,6 @@ select * from UsersComments;
 select * from Comments;
 select * from ArticlesCategories;
 select * from Categories;
+select * from Reports;
+select * from Infractions;
 select @@servername

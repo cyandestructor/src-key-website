@@ -14,6 +14,9 @@
     Article currentArticle = (Article)request.getAttribute("article");
     User author = (User)request.getAttribute("author");
     
+    User currentUser = (User)request.getSession().getAttribute("user");
+    boolean admin = currentUser != null;
+    
     String userProfilePic = "assets/img/user-propic-default-1.png";
     
     if(author != null){
@@ -47,6 +50,39 @@
 
 <body>
     <jsp:include page="navbar.jsp"/>
+    <!-- Suspend User modal -->
+    <%
+        if(admin){
+    %>
+    <div class="modal fade" id="suspendUserModal" tabindex="-1" role="dialog" aria-labelledby="suspendUserModalLabel1" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="suspendUserModalLabel1">Suspend User Account</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Describe the reason of the suspension to confirm
+                    <form action="SuspendUser" method="POST">
+                        <div class="form-group">
+                            <input type="hidden" name="userID">
+                            <label for="message-text" class="col-form-label">Message:</label>
+                            <textarea class="form-control" id="message-text" name="description"></textarea>
+                        </div>
+                        <button type="submit" class="btn site-btn-primary my-2">Confirm and suspend</button>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn site-btn-primary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <%
+        }
+    %>
     <div class="page-container page-background bg-dark-page"">
         <div class=" page-content mx-auto py-4 bg-white">
         <div class="container">
@@ -141,7 +177,15 @@
                                 </button>
                                 <span class="mx-1 my-auto"><%= comment.getUpVotes() %></span><a href="VoteComment?articleID=<%= currentArticle.getId() %>&commentID=<%= comment.getId() %>&vote=true" class="btn btn-sm site-btn-primary ml-1 material-icons">thumb_up</a>
                                 <a href="VoteComment?articleID=<%= currentArticle.getId() %>&commentID=<%= comment.getId() %>&vote=false" class="btn btn-sm site-btn-primary ml-1 material-icons">thumb_down</a>
-                                <a href="#" class="btn btn-sm site-btn-primary ml-1 material-icons">report</a>
+                                <%
+                                    if(admin){
+                                %>
+                                <button type="button" class="btn btn-sm site-btn-primary ml-1 material-icons" data-toggle="modal" data-target="#suspendUserModal" data-username="<%= comment.getPosterUsername() %>" data-user="<%= comment.getUserId() %>">
+                                    report
+                                </button>
+                                <%
+                                    }
+                                %>
                                 <div class="dropdown-menu" aria-labelledby="commentRespondButton<%= comment.getId()%>">
                                     <form action="RespondComment" method="POST" class="p-1">
                                         <div class="form-group mx-1">
@@ -174,6 +218,19 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
         integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
         crossorigin="anonymous"></script>
+    <script>
+    $('#suspendUserModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget) // Button that triggered the modal
+        var username = button.data('username')
+        var userID = button.data('user')
+        
+        var modal = $(this)
+        modal.find('.modal-title').text('Suspend User: ' + username)
+        modal.find('.modal-body input').val(userID)
+        console.log(username)
+        console.log(userID)
+    })
+    </script>
 </body>
 
 </html>
