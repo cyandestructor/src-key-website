@@ -67,6 +67,28 @@ public class CommentDAO {
         return 0;
     }
     
+    public static int DeleteComment(long commentID){
+        Connection con = null;
+        try {
+            con = DbConnection.getConnection();
+            CallableStatement statement = con.prepareCall("call DeleteComment(?)");
+            statement.setLong(1, commentID);
+            
+            return statement.executeUpdate();
+        } catch (java.sql.SQLException ex) {
+            System.out.println(ex.getMessage());
+        } finally {
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(CommentDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+        return 0;
+    }
+    
     public static int VoteComment(long commentID, boolean upVote){
         Connection con = null;
         try {

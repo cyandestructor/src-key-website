@@ -83,6 +83,25 @@
     <%
         }
     %>
+    <div class="modal fade" id="deleteCommentModal" tabindex="-1" role="dialog" aria-labelledby="deleteCommentLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteCommentLabel">Are you sure you want to delete this comment?</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="DeleteComment" method="POST">
+                        <input type="hidden" name="commentID">
+                        <button type="button" class="btn site-btn-primary" data-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn site-btn-primary">Yes</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="page-container page-background bg-dark-page"">
         <div class=" page-content mx-auto py-4 bg-white">
         <div class="container">
@@ -186,6 +205,15 @@
                                 <%
                                     }
                                 %>
+                                <%
+                                    if(currentUser != null && currentUser.getId() == comment.getId() || admin){
+                                %>
+                                <button type="button" class="btn btn-sm site-btn-primary ml-1 material-icons" data-toggle="modal" data-target="#deleteCommentModal" data-comment="<%= comment.getId() %>">
+                                    delete_forever
+                                </button>
+                                <%
+                                    }
+                                %>
                                 <div class="dropdown-menu" aria-labelledby="commentRespondButton<%= comment.getId()%>">
                                     <form action="RespondComment" method="POST" class="p-1">
                                         <div class="form-group mx-1">
@@ -227,8 +255,14 @@
         var modal = $(this)
         modal.find('.modal-title').text('Suspend User: ' + username)
         modal.find('.modal-body input').val(userID)
-        console.log(username)
-        console.log(userID)
+    })
+    
+    $('#deleteCommentModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget) // Button that triggered the modal
+        var comment = button.data('comment')
+        
+        var modal = $(this)
+        modal.find('.modal-body input').val(comment)
     })
     </script>
 </body>
