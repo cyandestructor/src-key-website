@@ -34,3 +34,6 @@
     border-radius: 50%;
     object-fit: cover;
 }
+.preserve-line-break{
+    white-space: pre-line;
+}

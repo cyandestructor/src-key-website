@@ -4,11 +4,20 @@
     Author     : delli
 --%>
 
+<%@page import="models.User"%>
 <%@page import="models.Article"%>
 <%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <%
+    User user = (User)request.getAttribute("currentUser");
+    
+    String userProfilePic = "assets/img/user-propic-default-1.png";
+    
+    if(user != null){
+        userProfilePic = user.getProfilePic().isBlank() ? userProfilePic : "/images/" + user.getProfilePic();
+    }
+    
     ArrayList<Article> articles = (ArrayList<Article>)request.getAttribute("articles");
     if(articles == null){
         articles = new ArrayList<Article>();
@@ -43,7 +52,7 @@
                 <!-- Newsboard panel -->
                 <div class="col-12 col-md-3 col-lg-2 newsboard-panel bg-dark-secondary">
                     <div class="user-profile-pic">
-                        <img src="assets/img/user-propic-default-1.svg" alt="user profile picture">
+                        <img src="<%= userProfilePic %>" alt="user profile picture">
                     </div>
                     <h2>Newsboard panel</h2>
                     <nav>

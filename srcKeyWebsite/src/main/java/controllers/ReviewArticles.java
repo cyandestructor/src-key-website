@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import models.Article;
+import models.User;
 
 /**
  *
@@ -42,6 +43,13 @@ public class ReviewArticles extends HttpServlet {
         for (Article article : unreviewed){
             article.setArticleMultimedia(MultimediaDAO.GetArticleMultimeda(article.getId(), 'i'));
             article.setAuthorName(UserDAO.GetUserFullName(article.getAuthor()));
+        }
+        
+        User user = (User)request.getSession().getAttribute("user");
+        
+        if (user != null){
+            User userInfo = UserDAO.GetUserByID(user.getId());
+            request.setAttribute("currentUser", userInfo);
         }
         
         request.setAttribute("unreviewed", unreviewed);

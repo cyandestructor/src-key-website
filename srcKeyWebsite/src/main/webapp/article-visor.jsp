@@ -132,7 +132,7 @@
                     </div>
                     <!-- Article body text -->
                     <div class="article-body">
-                        <p>
+                        <p class="preserve-line-break text-left">
                             <%= currentArticle.getBody()%>
                         </p>
                         <img class="article-image float-right" src="assets/img/stock (2).jpg" alt="people working with a computer">

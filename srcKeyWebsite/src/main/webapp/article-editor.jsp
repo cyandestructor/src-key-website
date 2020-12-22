@@ -35,7 +35,7 @@
                                 <div class="form-group">
                                     <div class="article-banner d-flex justify-content-center bg-dark-secondary">
                                         <label for="imgFileControl" class="btn btn-lg btn-block material-icons my-auto">image</label>
-                                        <input type="file" accept=".jpg,.png" style="display:none;" id="imgFileControl" name="images">
+                                        <input type="file" accept=".jpg,.png" style="display:none;" id="imgFileControl" name="images" multiple>
                                     </div>
                                     <label for="articleTitle">Title</label>
                                     <input type="text" id="articleTitle" name="title" class="form-control">

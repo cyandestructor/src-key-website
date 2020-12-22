@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.nio.file.Files;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -24,6 +25,7 @@ import models.Article;
 import models.Category;
 import models.User;
 import utility.FileUtils;
+import utility.MultimediaFile;
 
 /**
  *
@@ -60,22 +62,18 @@ public class SubmitArticle extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        Part file = request.getPart("images");
-        File fileSaveDir = new File(utility.FileUtils.RUTE_USER_IMAGE);
-        if (!fileSaveDir.exists()) {
-            fileSaveDir.mkdirs();
-        }
+        ArrayList<Part> parts = (ArrayList<Part>)request.getParts();
+        ArrayList<MultimediaFile> files = new ArrayList<>();
         
-        String contentType;
-        String nameImage;
-        String fullPath = "";
-        
-        if(file != null){
-            contentType = file.getContentType();
-            nameImage = file.getName() + System.currentTimeMillis() + utility.FileUtils.GetExtension(contentType);
-            File imageFile = new File(fileSaveDir, nameImage);
-            fullPath = imageFile.toPath().toString();
-            file.write(fullPath);
+        for(Part part : parts){
+            String contentType = part.getContentType();
+            if (contentType != null) {
+                if (FileUtils.GetFileType(contentType).equals("image")) {
+                    files.add(FileUtils.UploadImage(part));
+                } else if (FileUtils.GetFileType(contentType).equals("video")) {
+                    files.add(FileUtils.UploadVideo(part));
+                }
+            }
         }
         
         String title = request.getParameter("title");
@@ -98,15 +96,18 @@ public class SubmitArticle extends HttpServlet {
                         ArticleDAO.SetArticleCategory(articleID, ctgID);
                     }
                 }
-                if (!fullPath.equals("")) {
-                    ArticleDAO.SetArticleMultimedia(articleID, fullPath, 'i');
+                for (MultimediaFile mf : files) {
+                    if (!mf.getFilePath().equals("")) {
+                        ArticleDAO.SetArticleMultimedia(articleID, mf.getFilePath(), mf.getFileType());
+                    }
                 }
-                response.sendRedirect("article-editor.jsp"); // CHECK THIS
+                response.sendRedirect("article-editor.jsp");
                 return;
             }
             
         }
-        response.sendRedirect("index.jsp");
+        
+        response.sendRedirect("Home");
     }
 
     /**
