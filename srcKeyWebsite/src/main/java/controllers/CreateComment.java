@@ -61,6 +61,11 @@ public class CreateComment extends HttpServlet {
             Comment comment = new Comment(bodyText);
             CommentDAO.CreateComment(comment, articleID, currentUser.getId());
         }
+        else{
+            Comment comment = new Comment(bodyText);
+            String altUsername = request.getParameter("altUsername");
+            CommentDAO.CreateGuestComment(comment, articleID, altUsername);
+        }
         
         response.sendRedirect("ArticleVisor?articleID=" + articleID.toString());
     }

@@ -43,6 +43,33 @@ public class CommentDAO {
         return 0;
     }
     
+    public static int CreateGuestComment(Comment comment, long articleID, String altUsername){
+        Connection con = null;
+        try {
+            con = DbConnection.getConnection();
+            CallableStatement statement = con.prepareCall("call CreateGuestComment(?,?,?)");
+            statement.setLong(1, articleID);
+            statement.setString(2, comment.getCommentText());
+            if(altUsername != null && !altUsername.isBlank()){
+                statement.setString(3, altUsername);
+            }else{
+                statement.setString(3, null);
+            }
+            return statement.executeUpdate();
+        } catch (java.sql.SQLException ex) {
+            System.out.println(ex.getMessage());
+        } finally {
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(CommentDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+        return 0;
+    }
+    
     public static int CreateComment(Comment comment, long articleID, long userID, long parent){
         Connection con = null;
         try {
@@ -51,6 +78,34 @@ public class CommentDAO {
             statement.setLong(1, articleID);
             statement.setLong(2, userID);
             statement.setString(3, comment.getCommentText());
+            statement.setLong(4, parent);
+            return statement.executeUpdate();
+        } catch (java.sql.SQLException ex) {
+            System.out.println(ex.getMessage());
+        } finally {
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(CommentDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+        return 0;
+    }
+    
+    public static int CreateGuestComment(Comment comment, long articleID, String altUsername, long parent){
+        Connection con = null;
+        try {
+            con = DbConnection.getConnection();
+            CallableStatement statement = con.prepareCall("call CreateGuestComment(?,?,?,?)");
+            statement.setLong(1, articleID);
+            statement.setString(2, comment.getCommentText());
+            if(altUsername != null && !altUsername.isBlank()){
+                statement.setString(3, altUsername);
+            }else{
+                statement.setString(3, null);
+            }
             statement.setLong(4, parent);
             return statement.executeUpdate();
         } catch (java.sql.SQLException ex) {

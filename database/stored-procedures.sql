@@ -540,6 +540,38 @@ AS
 		ROLLBACK;
 GO
 
+IF EXISTS (SELECT name FROM sysobjects WHERE name = 'CreateGuestComment')
+	DROP PROCEDURE CreateGuestComment;
+GO
+
+CREATE PROCEDURE CreateGuestComment
+	@ArticleID		bigint,
+	@Body			text,
+	@AltUsername	nvarchar(50) = null,
+	@Parent			bigint = null
+AS
+	BEGIN TRAN;
+
+	IF @Parent IS NULL
+		INSERT INTO Comments (cText) VALUES (@Body);
+	ELSE
+		INSERT INTO Comments (cText, cParent) VALUES (@Body, @Parent);
+
+	DECLARE @LastCommentID bigint = IDENT_CURRENT('Comments');
+	DECLARE @Username nvarchar(50);
+	IF @AltUsername IS NOT NULL
+		SET @Username = @AltUsername;
+	ELSE
+		SET @Username = CONCAT('Anonymous', CONVERT(nvarchar(10), @LastCommentID));
+
+	INSERT INTO UsersComments (aID, cID, altUsername) VALUES (@ArticleID, @LastCommentID, @Username);
+
+	IF @@ERROR = 0
+		COMMIT;
+	ELSE
+		ROLLBACK;
+GO
+
 IF EXISTS (SELECT name FROM sysobjects WHERE name = 'GetArticleComments')
 	DROP PROCEDURE GetArticleComments;
 GO

@@ -55,7 +55,7 @@ public class ArticleVisor extends HttpServlet {
                 comment.setParentComment(CommentDAO.GetComment(comment.getParentID()));
             }
             User poster = UserDAO.GetUserByID(comment.getUserId());
-            comment.setPosterImg(poster.getProfilePic());
+            comment.setPosterImg(poster != null ? poster.getProfilePic() : "");
         }
         
         request.setAttribute("articleComments", articleComments);

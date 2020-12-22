@@ -151,6 +151,13 @@
                     <form action="CreateComment" method="POST">
                         <div class="form-group mx-1">
                             <input type="hidden" name="articleID" value="<%= currentArticle.getId() %>">
+                            <%
+                                if(currentUser == null){
+                            %>
+                            <input type="text" name="altUsername" class="form-control mb-1" placeholder="Guest name">
+                            <%
+                                }
+                            %>
                             <input type="text" name="commentBody" class="form-control" id="commentBox" placeholder="What do you think?">
                         </div>
                         <button type="submit" class="btn btn-sm site-btn-primary">Submit</button>
@@ -159,8 +166,9 @@
                         <%
                             for (Comment comment : articleComments){
                                 String profilePic = comment.getPosterImg().isBlank() ? "assets/img/user-propic-default-1.png" : "/images/" + comment.getPosterImg();
-                                String posterUsername = comment.getPosterUsername();
+                                String posterUsername = comment.getUserId() != 0 ? comment.getPosterUsername() : comment.getPosterUsername() + " (guest)";
                                 posterUsername += comment.getUserId() == author.getId() ? " &#9733;" : "";
+                                String userProfileLink = comment.getUserId() != 0 ? "Profile?userId=" + Long.toString(comment.getUserId()) : "#";
                         %>
                         <li class="comment-card bg-dark-secondary mb-1" id="comment<%= comment.getId() %>">
                             <div class="media">
@@ -169,7 +177,7 @@
                                 </div>
                                 <div class="media-body">
                                     <p class="mt-0" style="font-size: 1.25em;">
-                                        <a href="Profile?userId=<%= comment.getUserId()%>" class="site-text-link">
+                                        <a href="<%= userProfileLink %>" class="site-text-link">
                                             <%= posterUsername %>
                                         </a>
                                     </p>
@@ -197,7 +205,7 @@
                                 <span class="mx-1 my-auto"><%= comment.getUpVotes() %></span><a href="VoteComment?articleID=<%= currentArticle.getId() %>&commentID=<%= comment.getId() %>&vote=true" class="btn btn-sm site-btn-primary ml-1 material-icons">thumb_up</a>
                                 <a href="VoteComment?articleID=<%= currentArticle.getId() %>&commentID=<%= comment.getId() %>&vote=false" class="btn btn-sm site-btn-primary ml-1 material-icons">thumb_down</a>
                                 <%
-                                    if(admin){
+                                    if(admin && comment.getUserId() != 0){
                                 %>
                                 <button type="button" class="btn btn-sm site-btn-primary ml-1 material-icons" data-toggle="modal" data-target="#suspendUserModal" data-username="<%= comment.getPosterUsername() %>" data-user="<%= comment.getUserId() %>">
                                     report
@@ -219,6 +227,13 @@
                                         <div class="form-group mx-1">
                                             <input type="hidden" name="articleID" value="<%= currentArticle.getId() %>">
                                             <input type="hidden" name="parentID" value="<%= comment.getId() %>">
+                                            <%
+                                                if (currentUser == null) {
+                                            %>
+                                            <input type="text" name="altUsername" class="form-control mb-1" placeholder="Guest name">
+                                            <%
+                                                }
+                                            %>
                                             <input type="text" name="commentBody" class="form-control" placeholder="What do you think?">
                                         </div>
                                         <button type="submit" class="btn btn-sm site-btn-primary">Submit</button>

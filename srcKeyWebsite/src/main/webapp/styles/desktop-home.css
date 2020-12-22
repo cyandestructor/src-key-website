@@ -20,6 +20,11 @@ tomato
     background-color: rgba(61, 61, 61, 0.75);
     border-radius: 20px;
 }
+.carousel-item img{
+    width: 100%;
+    height: 450px;
+    object-fit: cover;
+}
 .page-background{
     background-image: url(../assets/img/src-key-logo-bg.svg);
     background-size: 50px;
