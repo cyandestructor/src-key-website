@@ -91,7 +91,7 @@
                             <button type="submit" class="btn site-btn-primary">Log in</button>
                         </form>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item site-dropdown-item" href="#">Not a member? Join the community</a>
+                        <a class="dropdown-item site-dropdown-item" href="registration.jsp">Not a member? Join the community</a>
                         <a class="dropdown-item site-dropdown-item" href="#">Forgot password?</a>
                     </div>
                 </div>

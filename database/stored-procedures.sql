@@ -444,7 +444,7 @@ CREATE PROCEDURE GetArticleMutimedia
 	@ArticleID	bigint,
 	@FileType	char(1) = null
 AS
-	IF @FileType IS NOT NULL
+	IF @FileType IS NULL
 		BEGIN
 			SELECT
 				mtmID,

@@ -32,7 +32,7 @@ import utility.MultimediaFile;
  * @author delli
  */
 @WebServlet(name = "SubmitArticle", urlPatterns = {"/SubmitArticle"})
-@MultipartConfig(maxFileSize = 1024 * 1024 * 5, maxRequestSize = 1024 * 1024 * 25)
+@MultipartConfig(maxFileSize = 1024 * 1024 * 10, maxRequestSize = 1024 * 1024 * 10 * 5)
 public class SubmitArticle extends HttpServlet {
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

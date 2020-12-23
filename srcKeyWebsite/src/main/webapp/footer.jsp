@@ -44,8 +44,8 @@
             <div class="footer-copyright bg-dark-secondary py-2">
                 <a href="Home" class="list-link" title="Home">&copy; src-key</a>
                 <p>
-                    Icons designed by <a class="list-link" href="http://www.freepik.com/" title="Freepik">Freepik</a>
-                    from <a class="list-link" href="https://www.flaticon.es/" title="Flaticon"> www.flaticon.es</a>
+                    Icons designed by <a class="list-link" href="http://www.freepik.com/" title="Freepik" target="_blank">Freepik</a>
+                    from <a class="list-link" href="https://www.flaticon.es/" title="Flaticon" target="_blank"> www.flaticon.es</a>
                 </p>
             </div>
         </footer>
