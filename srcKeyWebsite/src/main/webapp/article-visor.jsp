@@ -12,6 +12,10 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <%
+    String mode = (String) request.getAttribute("mode");
+    
+    boolean editor = mode != null && mode.equals("review");
+    
     Article currentArticle = (Article) request.getAttribute("article");
     User author = (User) request.getAttribute("author");
 
@@ -180,6 +184,13 @@
                             <h1>Comments</h1>
                             <form action="CreateComment" method="POST">
                                 <div class="form-group mx-1">
+                                    <%
+                                        if(editor){
+                                    %>
+                                    <input type="hidden" name="editor" value="true">
+                                    <%
+                                        }
+                                    %>
                                     <input type="hidden" name="articleID" value="<%= currentArticle.getId()%>">
                                     <%
                                         if (currentUser == null) {
@@ -255,6 +266,13 @@
                                         <div class="dropdown-menu" aria-labelledby="commentRespondButton<%= comment.getId()%>">
                                             <form action="RespondComment" method="POST" class="p-1">
                                                 <div class="form-group mx-1">
+                                                    <%
+                                                        if (editor) {
+                                                    %>
+                                                    <input type="hidden" name="editor" value="true">
+                                                    <%
+                                                        }
+                                                    %>
                                                     <input type="hidden" name="articleID" value="<%= currentArticle.getId()%>">
                                                     <input type="hidden" name="parentID" value="<%= comment.getId()%>">
                                                     <%

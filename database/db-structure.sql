@@ -51,7 +51,8 @@ CREATE TABLE Comments (
 	downVotes	bigint default 0,
 
 	cParent		bigint,
-	active bit default 1,
+	active		bit default 1,
+	editor		bit default 0,
 
 	CONSTRAINT PK_COMMENT PRIMARY KEY (cID),
 
@@ -71,7 +72,9 @@ CREATE TABLE Multimedia (
 	filePath	nvarchar(255),
 
 	articleID	bigint,
-	uploadDate	datetime default GETDATE()
+	uploadDate	datetime default GETDATE(),
+
+	active		bit default 1
 
 	CONSTRAINT PK_MULTIMEDIA PRIMARY KEY (mtmID),
 

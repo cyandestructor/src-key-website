@@ -97,4 +97,25 @@ public class MultimediaDAO {
         return files;
     }
     
+    public static int DeleteMultimedia(long multimediaID){
+        Connection con = null;
+        try {
+            con = DbConnection.getConnection();
+            CallableStatement statement = con.prepareCall("call DeleteMultimedia(?)");
+            statement.setLong(1, multimediaID);
+            
+            return statement.executeUpdate();
+        } catch (java.sql.SQLException ex) {
+            System.out.println(ex.getMessage());
+        } finally {
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(MultimediaDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+        return 0;
+    }
 }

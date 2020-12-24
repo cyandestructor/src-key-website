@@ -58,9 +58,16 @@ public class RespondComment extends HttpServlet {
         Long parentID = Long.parseLong(request.getParameter("parentID"));
         String bodyText = request.getParameter("commentBody");
         
+        String editor = request.getParameter("editor");
+        
         if(currentUser != null){
             Comment comment = new Comment(bodyText);
-            CommentDAO.CreateComment(comment, articleID, currentUser.getId(), parentID);
+            if(editor != null){
+                CommentDAO.CreateEditorComment(comment, articleID, currentUser.getId(), parentID);
+            }
+            else{
+                CommentDAO.CreateComment(comment, articleID, currentUser.getId(), parentID);
+            }
         }
         else{
             Comment comment = new Comment(bodyText);
@@ -68,7 +75,7 @@ public class RespondComment extends HttpServlet {
             CommentDAO.CreateGuestComment(comment, articleID, altUsername, parentID);
         }
         
-        response.sendRedirect("ArticleVisor?articleID=" + articleID.toString());
+        response.sendRedirect(request.getHeader("referer"));
     }
 
     /**

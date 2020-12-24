@@ -96,7 +96,7 @@
                                         </div>
                                     </div>
                                     <div class="mt-2 d-flex justify-content-end">
-                                        <a href="ArticleVisor?articleID=<%= article.getId()%>" class="btn site-btn-primary ml-1">Review</a>
+                                        <a href="ArticleVisor?articleID=<%= article.getId()%>&mode=review" class="btn site-btn-primary ml-1">Review</a>
                                         <a href="ApproveArticle?articleID=<%=article.getId()%>&state=p" class="btn site-btn-primary ml-1">Approve</a>
                                         <a href="ApproveArticle?articleID=<%=article.getId()%>&state=r" class="btn site-btn-primary ml-1">Reject</a>
                                     </div>

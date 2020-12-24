@@ -43,6 +43,31 @@ public class CommentDAO {
         return 0;
     }
     
+    public static int CreateEditorComment(Comment comment, long articleID, long userID){
+        Connection con = null;
+        try {
+            con = DbConnection.getConnection();
+            CallableStatement statement = con.prepareCall("call CreateComment(?,?,?,?,?)");
+            statement.setLong(1, articleID);
+            statement.setLong(2, userID);
+            statement.setString(3, comment.getCommentText());
+            statement.setNull(4, java.sql.Types.BIGINT);
+            statement.setBoolean(5, true);
+            return statement.executeUpdate();
+        } catch (java.sql.SQLException ex) {
+            System.out.println(ex.getMessage());
+        } finally {
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(CommentDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+        return 0;
+    }
+    
     public static int CreateGuestComment(Comment comment, long articleID, String altUsername){
         Connection con = null;
         try {
@@ -79,6 +104,31 @@ public class CommentDAO {
             statement.setLong(2, userID);
             statement.setString(3, comment.getCommentText());
             statement.setLong(4, parent);
+            return statement.executeUpdate();
+        } catch (java.sql.SQLException ex) {
+            System.out.println(ex.getMessage());
+        } finally {
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(CommentDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+        return 0;
+    }
+    
+    public static int CreateEditorComment(Comment comment, long articleID, long userID, long parent){
+        Connection con = null;
+        try {
+            con = DbConnection.getConnection();
+            CallableStatement statement = con.prepareCall("call CreateComment(?,?,?,?,?)");
+            statement.setLong(1, articleID);
+            statement.setLong(2, userID);
+            statement.setString(3, comment.getCommentText());
+            statement.setLong(4, parent);
+            statement.setBoolean(5, true);
             return statement.executeUpdate();
         } catch (java.sql.SQLException ex) {
             System.out.println(ex.getMessage());

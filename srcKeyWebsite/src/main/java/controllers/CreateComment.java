@@ -57,9 +57,16 @@ public class CreateComment extends HttpServlet {
         Long articleID = Long.parseLong(request.getParameter("articleID"));
         String bodyText = request.getParameter("commentBody");
         
+        String editor = request.getParameter("editor");
+        
         if(currentUser != null){
             Comment comment = new Comment(bodyText);
-            CommentDAO.CreateComment(comment, articleID, currentUser.getId());
+            if(editor != null){
+                CommentDAO.CreateEditorComment(comment, articleID, currentUser.getId());
+            }
+            else{
+                CommentDAO.CreateComment(comment, articleID, currentUser.getId());
+            }
         }
         else{
             Comment comment = new Comment(bodyText);
@@ -67,7 +74,7 @@ public class CreateComment extends HttpServlet {
             CommentDAO.CreateGuestComment(comment, articleID, altUsername);
         }
         
-        response.sendRedirect("ArticleVisor?articleID=" + articleID.toString());
+        response.sendRedirect(request.getHeader("referer"));
     }
 
     /**

@@ -129,6 +129,32 @@ public class ArticleDAO {
         
     }
     
+    public static int EditArticle(Article article){
+        
+        Connection con = null;
+        try {
+            con = DbConnection.getConnection();
+            CallableStatement statement = con.prepareCall("call EditArticle(?,?,?,?)");
+            statement.setLong(1, article.getId());
+            statement.setString(2, article.getTitle());
+            statement.setString(3, article.getDescription());
+            statement.setString(4, article.getBody());
+            
+            return statement.executeUpdate();
+        } catch (java.sql.SQLException ex) {
+            System.out.println(ex.getMessage());
+        } finally {
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(ArticleDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+        return 0;
+    }
+    
     public static ArrayList<Article> GetArticles(char state){
         ArrayList<Article> articles = new ArrayList<Article>();
         Connection con = null;

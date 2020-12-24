@@ -72,15 +72,18 @@
                             <%
                                 for(Article article : articles){
                                     String badge = "";
+                                    String mode = "";
                                     switch(article.getArticleState()){
                                         case 'p':
                                             badge = "<span class=\"badge badge-success\">Published</span>";
                                             break;
                                         case 'u':
                                             badge = "<span class=\"badge badge-warning\">Unreviewed</span>";
+                                            mode = "&mode=review";
                                             break;
                                         case 'r':
                                             badge = "<span class=\"badge badge-danger\">Rejected</span>";
+                                            mode = "&mode=review";
                                             break;
                                     }
                             %>
@@ -98,8 +101,8 @@
                                         </div>
                                     </div>
                                     <div class="mt-2 d-flex justify-content-end">
-                                        <a href="ArticleVisor?articleID=<%= article.getId() %>" class="btn site-btn-primary">Read</a>
-                                        <form class="mx-1">
+                                        <a href="ArticleVisor?articleID=<%= article.getId() %><%= mode %>" class="btn site-btn-primary">Read</a>
+                                        <form action="EditArticle" method="GET" class="mx-1">
                                             <input type="hidden" name="articleID" value="<%= article.getId() %>">
                                             <button type="submit" class="btn site-btn-primary">Edit</button>
                                         </form>

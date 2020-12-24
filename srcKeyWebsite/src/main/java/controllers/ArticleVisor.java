@@ -41,6 +41,8 @@ public class ArticleVisor extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
+        String mode = request.getParameter("mode");
+        
         long articleID = Long.parseLong(request.getParameter("articleID"));
         Article article = ArticleDAO.GetArticleByID(articleID);
         article.setArticleMultimedia(MultimediaDAO.GetArticleMultimeda(articleID));
@@ -62,6 +64,10 @@ public class ArticleVisor extends HttpServlet {
         
         request.setAttribute("article", article);
         request.setAttribute("author", author);
+        
+        if(mode != null){
+            request.setAttribute("mode", mode);
+        }
         
         request.getRequestDispatcher("article-visor.jsp").forward(request, response);
     }

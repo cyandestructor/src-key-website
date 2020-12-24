@@ -192,6 +192,33 @@ AS
 		END
 GO
 
+IF EXISTS (SELECT name FROM sysobjects WHERE name = 'EditArticle')
+	DROP PROCEDURE EditArticle;
+GO
+
+CREATE PROCEDURE EditArticle
+	@ArticleID	bigint,
+	@Title		nvarchar(80),
+	@Desc		nvarchar(100),
+	@Body		text
+AS
+	BEGIN TRAN;
+	
+	UPDATE Articles
+		SET
+			title = @Title,
+			aDesc = @Desc,
+			aBody = @Body,
+			aState = 'u'
+		WHERE
+			aID = @ArticleID;
+
+	IF @@ERROR = 0
+		COMMIT;
+	ELSE
+		ROLLBACK;
+GO
+
 IF EXISTS (SELECT name FROM sysobjects WHERE name = 'GetArticles')
 	DROP PROCEDURE GetArticles;
 GO
@@ -454,7 +481,7 @@ AS
 			FROM
 				Multimedia
 			WHERE
-				articleID = @ArticleID;
+				articleID = @ArticleID AND active = 1;
 		END
 	ELSE
 		BEGIN
@@ -466,8 +493,20 @@ AS
 			FROM
 				Multimedia
 			WHERE
-				articleID = @ArticleID AND fileType = @FileType;
+				articleID = @ArticleID AND fileType = @FileType AND active = 1;
 		END
+GO
+
+IF EXISTS (SELECT name FROM sysobjects WHERE name = 'DeleteMultimedia')
+	DROP PROCEDURE DeleteMultimedia;
+GO
+
+CREATE PROCEDURE DeleteMultimedia
+	@MultimediaID		bigint
+AS
+	UPDATE Multimedia
+		SET active = 0
+		WHERE mtmID = @MultimediaID;
 GO
 
 IF EXISTS (SELECT name FROM sysobjects WHERE name = 'SetArticleState')
@@ -481,6 +520,19 @@ AS
 	UPDATE Articles
 		SET aState = @State
 		WHERE aID = @ArticleID;
+
+	IF @State = 'p'
+		BEGIN
+			UPDATE C
+				SET
+					C.active = 0,
+					C.cText = 'This comment was deleted'
+				FROM
+					Comments AS C
+					INNER JOIN UsersComments AS UC ON UC.cID = C.cID
+				WHERE
+					UC.aID = @ArticleID AND C.editor = 1;
+		END
 GO
 
 IF EXISTS (SELECT name FROM sysobjects WHERE name = 'RegisterCategory')
@@ -521,14 +573,18 @@ CREATE PROCEDURE CreateComment
 	@ArticleID		bigint,
 	@UserID			bigint,
 	@Body			text,
-	@Parent			bigint = null
+	@Parent			bigint = null,
+	@Editor			bit = null
 AS
 	BEGIN TRAN;
 
+	IF @Editor IS NULL
+		SET @Editor = 0;
+
 	IF @Parent IS NULL
-		INSERT INTO Comments (cText) VALUES (@Body);
+		INSERT INTO Comments (cText, editor) VALUES (@Body, @Editor);
 	ELSE
-		INSERT INTO Comments (cText, cParent) VALUES (@Body, @Parent);
+		INSERT INTO Comments (cText, cParent, editor) VALUES (@Body, @Parent, @Editor);
 
 	DECLARE @LastCommentID bigint = IDENT_CURRENT('Comments');
 
