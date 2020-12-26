@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import models.User;
+import utility.SessionCookies;
 
 /**
  *
@@ -38,6 +39,7 @@ public class LogIn extends HttpServlet {
             throws ServletException, IOException {
         String username = request.getParameter("logUsername");
         String password = request.getParameter("logPassword");
+        boolean rememberAccount = request.getParameter("rememberAccount") != null;
         
         User user = UserDAO.LogIn(username, password);
         
@@ -45,6 +47,12 @@ public class LogIn extends HttpServlet {
             if(user.getAccountState() != 's'){
                 HttpSession session = request.getSession();
                 session.setAttribute("user", user);
+                
+                if(rememberAccount){
+                    // Generate cookies
+                    SessionCookies cookies = new SessionCookies(user);
+                    cookies.GenCookies(request, response);
+                }
 
                 response.sendRedirect("Home");
             }

@@ -7,6 +7,7 @@ package controllers;
 
 import dao.ArticleDAO;
 import dao.MultimediaDAO;
+import dao.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -15,7 +16,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import models.Article;
+import models.User;
+import utility.SessionCookies;
 
 /**
  *
@@ -47,6 +51,27 @@ public class Home extends HttpServlet {
         
         for (Article article : topArticles){
             article.setArticleMultimedia(MultimediaDAO.GetArticleMultimeda(article.getId(), 'i'));
+        }
+        
+        // Check if there is logged user
+        HttpSession session = request.getSession();
+        User user = (User)session.getAttribute("user");
+        if(user == null){
+            // If not, try to load it from the cookies
+            user = SessionCookies.ReadCookies(request, response);
+            if(user != null){
+                // If the cookies loaded successfully, set it into the session
+                session.setAttribute("user", user);
+            }
+        }
+        
+        if(user != null){
+            // Check if the logged user is suspended, if true, close session and clear cookies
+            User userInfo = UserDAO.GetUserByID(user.getId());
+            if(userInfo.getAccountState() == 's'){
+                session.invalidate();
+                SessionCookies.DeleteCookies(request, response);
+            }
         }
         
         request.setAttribute("recentArticles", recentArticles);

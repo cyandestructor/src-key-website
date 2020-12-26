@@ -83,7 +83,7 @@
                                        placeholder="Password">
                             </div>
                             <div class="form-check">
-                                <input type="checkbox" class="form-check-input" id="rememberMeCheck">
+                                <input type="checkbox" class="form-check-input" id="rememberMeCheck" name="rememberAccount" value="rememberAccount">
                                 <label class="form-check-label" for="rememberMeCheck">
                                     Remember me
                                 </label>
