@@ -44,7 +44,7 @@
                                     <label for="articleBodyText">Body</label>
                                     <textarea id="articleBodyText" rows="20" name="body" class="form-control"></textarea>
                                     <label for="videoFileControl">Video file input</label>
-                                    <input type="file" accept="video/*" name="video" class="form-control-file" id="videoFileControl">
+                                    <input type="file" accept=".mp4" name="video" class="form-control-file" id="videoFileControl">
                                     <label for="articleCategories">Categories</label>
                                     <input type="text" id="articleCategories" name="categories" class="form-control" placeholder="gamedev, webdev, hardware...">
                                 </div>

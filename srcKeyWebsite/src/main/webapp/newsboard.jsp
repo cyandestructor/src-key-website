@@ -12,6 +12,22 @@
 <%
     User user = (User)request.getAttribute("currentUser");
     
+    boolean admin = false, creator = false, editor = false;
+    
+    if(user != null){
+        switch(user.getUserType()){
+            case 'a':
+                admin = true;
+                break;
+            case 'c':
+                creator = true;
+                break;
+            case 'e':
+                editor = true;
+                break;
+        }
+    }
+    
     String userProfilePic = "assets/img/user-propic-default-1.png";
     
     if(user != null){
@@ -57,10 +73,28 @@
                     <h2>Newsboard panel</h2>
                     <nav>
                         <ul class="list-unstyled">
+                            <%
+                                if(admin || creator || editor){
+                            %>
                             <li><a href="article-editor.jsp" class="list-link">Write new article</a></li>
+                            <%
+                                }
+                            %>
                             <li><a href="Newsboard" class="list-link">Marked articles</a></li>
+                            <%
+                                if(admin || creator || editor){
+                            %>
                             <li><a href="CreatedArticles" class="list-link">Created articles</a></li>
+                            <%
+                                }
+                            %>
+                            <%
+                                if(admin || editor){
+                            %>
                             <li><a href="ReviewArticles" class="list-link">Review articles</a></li>
+                            <%
+                                }
+                            %>
                         </ul>
                     </nav>
                 </div>

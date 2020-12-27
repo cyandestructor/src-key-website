@@ -56,6 +56,19 @@ AS
 			userID = @UserID;
 GO
 
+IF EXISTS (SELECT name FROM sysobjects WHERE name = 'SetUserType')
+	DROP PROCEDURE SetUserType;
+GO
+
+CREATE PROCEDURE SetUserType
+	@UserID		bigint,
+	@Type		char(1)
+AS
+	UPDATE Users
+		SET uType = @Type
+		WHERE userID = @UserID;
+GO
+
 IF EXISTS (SELECT name FROM sysobjects WHERE name = 'LogIn')
 	DROP PROCEDURE LogIn;
 GO

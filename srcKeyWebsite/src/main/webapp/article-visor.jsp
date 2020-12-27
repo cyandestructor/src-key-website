@@ -20,7 +20,7 @@
     User author = (User) request.getAttribute("author");
 
     User currentUser = (User) request.getSession().getAttribute("user");
-    boolean admin = currentUser != null;
+    boolean admin = currentUser != null && (currentUser.getUserType() == 'a' || currentUser.getUserType() == 'm');
 
     String userProfilePic = "assets/img/user-propic-default-1.png";
 
@@ -246,7 +246,7 @@
                                         <span class="mx-1 my-auto"><%= comment.getUpVotes()%></span><a href="VoteComment?articleID=<%= currentArticle.getId()%>&commentID=<%= comment.getId()%>&vote=true" class="btn btn-sm site-btn-primary ml-1 material-icons">thumb_up</a>
                                         <a href="VoteComment?articleID=<%= currentArticle.getId()%>&commentID=<%= comment.getId()%>&vote=false" class="btn btn-sm site-btn-primary ml-1 material-icons">thumb_down</a>
                                         <%
-                                            if (admin && comment.getUserId() != 0) {
+                                            if (admin && comment.getUserId() != 0 && currentUser != null && currentUser.getId() != comment.getUserId()) {
                                         %>
                                         <button type="button" class="btn btn-sm site-btn-primary ml-1 material-icons" data-toggle="modal" data-target="#suspendUserModal" data-username="<%= comment.getPosterUsername()%>" data-user="<%= comment.getUserId()%>">
                                             report
@@ -255,7 +255,7 @@
                                             }
                                         %>
                                         <%
-                                            if (currentUser != null && currentUser.getId() == comment.getId() || admin) {
+                                            if (currentUser != null && currentUser.getId() == comment.getUserId() || admin) {
                                         %>
                                         <button type="button" class="btn btn-sm site-btn-primary ml-1 material-icons" data-toggle="modal" data-target="#deleteCommentModal" data-comment="<%= comment.getId()%>">
                                             delete_forever

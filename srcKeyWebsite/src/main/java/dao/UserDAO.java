@@ -93,6 +93,29 @@ public class UserDAO {
         return 0;
     }
     
+    public static int SetUserType(long userID, char type){
+        Connection con = null;
+        try {
+            con = DbConnection.getConnection();
+            CallableStatement statement = con.prepareCall("call SetUserType(?,?)");
+            statement.setLong(1, userID);
+            statement.setString(2, Character.toString(type));
+            
+            return statement.executeUpdate();
+        } catch (java.sql.SQLException ex) {
+            System.out.println(ex.getMessage());
+        } finally {
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+        return 0;
+    }
+    
     public static int SuspendUser(long adminID, long userID, String description){
         Connection con = null;
         try {
