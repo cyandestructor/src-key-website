@@ -31,22 +31,22 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-12">
-                            <form class="article-editor-form" action="SubmitArticle" method="POST" enctype="multipart/form-data" >
+                            <form class="article-editor-form" action="SubmitArticle" method="POST" enctype="multipart/form-data" onsubmit="return validateArticleSubmit()">
                                 <div class="form-group">
                                     <div class="article-banner d-flex justify-content-center bg-dark-secondary">
                                         <label for="imgFileControl" class="btn btn-lg btn-block material-icons my-auto">image</label>
                                         <input type="file" accept=".jpg,.png" style="display:none;" id="imgFileControl" name="images" multiple>
                                     </div>
                                     <label for="articleTitle">Title</label>
-                                    <input type="text" id="articleTitle" name="title" class="form-control">
+                                    <input type="text" id="articleTitle" name="title" class="form-control" maxlength="80" required>
                                     <label for="articleDescription">Description</label>
-                                    <textarea id="articleDescription" rows="5" name="description" class="form-control"></textarea>
+                                    <textarea id="articleDescription" rows="5" name="description" class="form-control" maxlength="100" required></textarea>
                                     <label for="articleBodyText">Body</label>
-                                    <textarea id="articleBodyText" rows="20" name="body" class="form-control"></textarea>
+                                    <textarea id="articleBodyText" rows="20" name="body" class="form-control" required></textarea>
                                     <label for="videoFileControl">Video file input</label>
                                     <input type="file" accept=".mp4" name="video" class="form-control-file" id="videoFileControl">
                                     <label for="articleCategories">Categories</label>
-                                    <input type="text" id="articleCategories" name="categories" class="form-control" placeholder="gamedev, webdev, hardware...">
+                                    <input type="text" id="articleCategories" name="categories" class="form-control" maxlength="90" placeholder="gamedev, webdev, hardware..." required>
                                 </div>
                                 <button class="btn btn-block site-btn-primary" type="submit">Send for review</button>
                             </form>
@@ -66,6 +66,7 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
                 integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
         crossorigin="anonymous"></script>
+        <script src="scripts/article-editor.js"></script>
     </body>
 
 </html>

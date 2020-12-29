@@ -36,7 +36,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-12 col-md-8 mx-auto">
-                            <form action="ProfileEditor" method="POST" enctype="multipart/form-data" >
+                            <form action="ProfileEditor" method="POST" enctype="multipart/form-data" onsubmit="return validateProfileEdition()">
                                 <div class="form-group">
                                     <div class="input-group mb-3">
                                         <div class="col-12">
@@ -48,33 +48,33 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">First and last name</span>
                                         </div>
-                                        <input type="text" name="firstName" value="<%= user.getFirstName() %>" placeholder="First name" class="form-control">
-                                        <input type="text" name="lastName" value="<%= user.getLastName() %>" placeholder="Last name" class="form-control">
+                                        <input type="text" id="firstnameInput" name="firstName" value="<%= user.getFirstName() %>" maxlength="50" placeholder="First name" class="form-control">
+                                        <input type="text" id="lastnameInput" name="lastName" value="<%= user.getLastName() %>" maxlength="50" placeholder="Last name" class="form-control">
                                     </div>
                                     <div class="input-group mb-3">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">Description</span>
                                         </div>
-                                        <textarea class="form-control" name="userDescription" placeholder="Tell your story..." aria-label="Description"><%= user.getDescription() %></textarea>
+                                        <textarea id="descriptionInput" class="form-control" name="userDescription" maxlength="255" placeholder="Tell your story..." aria-label="Description"><%= user.getDescription() %></textarea>
                                     </div>
                                     <div class="input-group mb-3">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text" id="email">Email</span>
                                         </div>
-                                        <input type="email" name="userEmail" value="<%= user.getEmail() %>" class="form-control" placeholder="email@example.com" aria-label="Email" aria-describedby="email">
+                                        <input type="email" id="emailInput" name="userEmail" value="<%= user.getEmail() %>" maxlength="50" class="form-control" placeholder="email@example.com" aria-label="Email" aria-describedby="email">
                                     </div>
                                     <h5>Change the password</h5>
                                     <div class="input-group mb-3">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text" id="oldPassword">Old password</span>
                                         </div>
-                                        <input type="password" name="oldPassword" class="form-control" aria-label="Old password" aria-describedby="oldPassword">
+                                        <input type="password" name="oldPassword" class="form-control" aria-label="Old password" maxlength="20" aria-describedby="oldPassword">
                                     </div>
                                     <div class="input-group mb-3">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text" id="newPassword">New password</span>
                                         </div>
-                                        <input type="password" name="newPassword" class="form-control" aria-label="New password" aria-describedby="newPassword">
+                                        <input type="password" name="newPassword" class="form-control" aria-label="New password" maxlength="20" aria-describedby="newPassword">
                                     </div>
                                 </div>
                                 <button class="btn btn-block site-btn-primary" type="submit">Save</button>
@@ -95,6 +95,7 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
                 integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
         crossorigin="anonymous"></script>
+        <script src="scripts/profile-editor.js"></script>
     </body>
 
 </html>

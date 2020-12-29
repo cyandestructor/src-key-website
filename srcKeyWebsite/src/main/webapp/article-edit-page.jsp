@@ -57,7 +57,7 @@
                         <%
                             for(Multimedia multimedia : article.getArticleMultimedia()){
                         %>
-                        <div id="file<%= multimedia.getId() %>" class="col-4 col-md-2 mb-2">
+                        <div id="file<%= multimedia.getId() %>" class="col-4 col-md-2 mb-2 article-multimedia">
                             <div class="bg-dark-secondary aspect-ratio-box">
                                 <div class="aspect-ratio-item">
                                     <%
@@ -84,15 +84,15 @@
                             </div>
                         </div>
                         <div class="col-12">
-                            <form class="article-editor-form" action="EditArticle" method="POST" enctype="multipart/form-data" >
+                            <form class="article-editor-form" action="EditArticle" method="POST" enctype="multipart/form-data" onsubmit="return validateArticleEdition()">
                                 <div class="form-group">
                                     <input type="file" accept=".jpg,.png,.mp4" style="display:none;" id="imgFileControl" name="images" multiple>
                                     <input type="hidden" name="articleID" value="<%= article.getId() %>">
                                     <input type="hidden" id="multimediaToDelete" name="multimediaToDelete">
                                     <label for="articleTitle">Title</label>
-                                    <input type="text" id="articleTitle" name="title" class="form-control" value="<%= article.getTitle() %>">
+                                    <input type="text" id="articleTitle" name="title" maxlength="80" class="form-control" value="<%= article.getTitle() %>">
                                     <label for="articleDescription">Description</label>
-                                    <textarea id="articleDescription" rows="5" name="description" class="form-control"><%= article.getDescription() %></textarea>
+                                    <textarea id="articleDescription" rows="5" name="description" maxlength="100" class="form-control"><%= article.getDescription() %></textarea>
                                     <label for="articleBodyText">Body</label>
                                     <textarea id="articleBodyText" rows="20" name="body" class="form-control"><%= article.getBody() %></textarea>
                                 </div>
@@ -130,6 +130,7 @@
                 $(element).hide();
             });
         </script>
+        <script src="scripts/article-edit-page.js"></script>
     </body>
 
 </html>

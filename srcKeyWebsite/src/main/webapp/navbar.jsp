@@ -74,13 +74,13 @@
                         <form class="px-4 py-3" action="LogIn" method="POST">
                             <div class="form-group">
                                 <label for="userFormUsername">Username</label>
-                                <input type="text" name="logUsername" class="form-control" id="userFormUsername"
-                                       placeholder="username">
+                                <input type="text" name="logUsername" class="form-control" id="userFormUsername" maxlength="30"
+                                       placeholder="username" required>
                             </div>
                             <div class="form-group">
                                 <label for="userFormPassword1">Password</label>
-                                <input type="password" name="logPassword" class="form-control" id="userFormEmail1"
-                                       placeholder="Password">
+                                <input type="password" name="logPassword" class="form-control" id="userFormEmail1" maxlength="20"
+                                       placeholder="Password" required>
                             </div>
                             <div class="form-check">
                                 <input type="checkbox" class="form-check-input" id="rememberMeCheck" name="rememberAccount" value="rememberAccount">
@@ -101,7 +101,7 @@
                 <div class="dropdown ml-2 user-button">
                     <button class="btn dropdown-toggle" type="button" id="UserMenuButton"
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <%= currentUser.getUsername() %>
+                        <%= currentUser.getUsername()%>
                         <div class="user-icon">
                             <svg id="Layer_1" enable-background="new 0 0 512 512" height="512" viewBox="0 0 512 512"
                                  width="512" xmlns="http://www.w3.org/2000/svg">
@@ -141,4 +141,6 @@
                 %>
             </div>
         </nav>
+        <script src="scripts/navbar.js"></script>
+    </body>
 </html>
