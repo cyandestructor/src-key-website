@@ -70,5 +70,5 @@ function validateArticleEdition() {
         alert(errorMessage);
     }
 
-    return false;
+    return result;
 }
